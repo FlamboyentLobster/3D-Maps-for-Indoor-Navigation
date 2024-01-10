@@ -1,0 +1,33 @@
+canvas {
+position: fixed;
+top: 0;
+left: 0;
+}
+
+main {
+  width: 100vw;
+  color: white;
+  z-index: 99;
+  position: absolute;
+  width: 100%;
+  margin: 0px auto;
+  padding: 5px 0px;
+  
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+h1, h2, h3, blockquote {
+  font-family: elevon, sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+  header {
+    text-align: center;
+    background: var(--dark-bg);
+    grid-column: 1 / span 12;
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    margin-bottom: var(--spacing);
+  }
