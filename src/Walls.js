@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-var floors = 3;
 var wallInstances = 8;
 
 let wallPos = [
@@ -19,7 +18,7 @@ const tempWall = new THREE.Object3D();
 const wallTexture = new THREE.TextureLoader().load('../textures/wall.png');
 
 const geometry = new THREE.BoxGeometry(0.2, 5, 5, 5);
-const material = new THREE.MeshBasicMaterial({ map: wallTexture, color: 0xFFF8E7});
+const material = new THREE.MeshBasicMaterial({ map: wallTexture, color: 0xFFF8E7, side: THREE.DoubleSide});
 const walls = new THREE.InstancedMesh(geometry, material, wallInstances);
 
 for (let i = 0; i < wallInstances; i++) {

@@ -1,31 +1,28 @@
-//import * as THREE from 'three';
+import * as THREE from 'three';
 
-//var floors = 1;
+let floorPos = [
+  [20, 20, 0, 0, 0],
+  [20, 20, 0, 10, 0],
+];
 
-//const tempFloor = new THREE.Object3D();
+var floorNo = 2;
 
-//const floorTexture = new THREE.TextureLoader().load('../textures/wall.png');
+const tempFloor = new THREE.Object3D();
+const floorTexture = new THREE.TextureLoader().load('../textures/wall.png');
 
-//const floorgeometry = new THREE.BoxGeometry(100, 100, 0.2, 5);
-//const floormaterial = new THREE.MeshBasicMaterial({ map: floorTexture, color: 0xFFF8E7});
-//const floors = new THREE.InstancedMesh(floorgeometry, floormaterial, floors);
+const geometry = new THREE.BoxGeometry(1, 0.1, 1, 5);
+const material = new THREE.MeshBasicMaterial({color: 0xFFF8E7, side: THREE.DoubleSide});
+const floors = new THREE.InstancedMesh(geometry, material, floorNo);
 
-//for (let i = 0; i < floors; i++) {
-  //  tempFloor.position.x = wallPos[i][0];
-  //  tempFloor.position.y = wallPos[i][1];
-  //  tempFloor.position.z = wallPos[i][2];
-  //  tempFloor.rotation.y = wallPos[i][3];
-  //  tempFloor.scale.x = wallPos[i][4];
- //   tempFloor.scale.y = wallPos[i][5];
-   // tempFloor.scale.z = wallPos[i][6];
-  
-   // tempFloor.updateMatrix();
-    //floors.setMatrixAt(i, tempFloor.matrix)
-    //wall.setColorAt(i, new THREE.Color(Math.random() * 0xAAAAAA))
-    //wireframe.setMatrixAt(i, tempWall.matrix)
-//}
+for (let i = 0; i < floorNo; i++) {
+  tempFloor.scale.x = floorPos[i][0];
+  tempFloor.scale.z = floorPos[i][1];
+  tempFloor.position.x = floorPos[i][2];
+  tempFloor.position.y = floorPos[i][3];
+  tempFloor.position.z = floorPos[i][4];
 
+  tempFloor.updateMatrix();
+  floors.setMatrixAt(i, tempFloor.matrix)
+}
 
-
-
-//export default floors
+export default floors
