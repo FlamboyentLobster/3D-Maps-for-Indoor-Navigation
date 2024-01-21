@@ -32,8 +32,6 @@ for (let i = 0; i < wallInstances; i++) {
   
     tempWall.updateMatrix();
     walls.setMatrixAt(i, tempWall.matrix)
-    //wall.setColorAt(i, new THREE.Color(Math.random() * 0xAAAAAA))
-    //wireframe.setMatrixAt(i, tempWall.matrix)
 }
 
 export default walls
