@@ -1,23 +1,45 @@
 import * as THREE from 'three';
 
-var wallInstances = 8;
+var wallInstances = 28; 
+
+// [x, heightFromGround, z, rotation, scaleX, scaleY, lengthZ]
 
 let wallPos = [
-    [10, 2.5, 0, 0, 1, 1, 2], 
-    [0, 2.5, 10, Math.PI / 2, 1, 1, 1],
-    [-10, 2.5, 0, 0, 1, 1, 1],
-    [0, 2.5, -10, Math.PI / 2, 1, 1, 1],
-    [10, 12.5, 0, 0, 1, 1, 1], 
-    [0, 12.5, 10, Math.PI / 2, 1, 1, 1],
-    [-10, 12.5, 0, 0, 1, 1, 1],
-    [0, 12.5, -10, Math.PI / 2, 1, 1, 1]
+    [6.25, 1, 0, 0, 1, 2, 9.5], 
+    [1, 1, 4.75, Math.PI / 2, 1, 2, 10.5],
+    [-6.25, 1, -1, 0, 1, 2, 7.5],
+    [0, 1, -4.75, Math.PI / 2, 1, 2, 12.5],
+    [-5.25, 1, 3.75, Math.PI / 4, 1, 2, 2.83],
+    [-1.25, 1, 2.75, 0, 1, 2, 4],
+    [0.25, 1, 2.75, 0, 1, 2, 4],
+    [3.25, 1, 2, 0, 1, 2, 5.5],
+    [2.25, 1, -2.75, 0, 1, 2, 4],
+    [0.75, 1, -2.75, 0, 1, 2, 4],
+    [-0.75, 1, -2.75, 0, 1, 2, 4],
+    [-2.25, 1, -2, 0, 1, 2, 5.5],
+    [1.75, 1, 0.75, Math.PI / 2, 1, 2, 3],
+    [-3.75, 1, 0.75, Math.PI / 2, 1, 2, 5],
+    [-1.5, 1, -0.75, Math.PI / 2, 1, 2, 1.5],
+    [2, 1, -0.75, Math.PI / 2, 1, 2, 2.5],
+    [6.25, 6, 0, 0, 1, 2, 9.5], 
+    [1, 6, 4.75, Math.PI / 2, 1, 2, 10.5],
+    [-6.25, 6, -1, 0, 1, 2, 7.5],
+    [0, 6, -4.75, Math.PI / 2, 1, 2, 12.5],
+    [-5.25, 6, 3.75, Math.PI / 4, 1, 2, 2.83],
+    [0.75, 6, -2.75, 0, 1, 2, 4],
+    [-0.75, 6, -2.75, 0, 1, 2, 4],
+    [-3.5, 6, -0.75, Math.PI / 2, 1, 2, 5.5],
+    [3.5, 6, -0.75, Math.PI / 2, 1, 2, 5.5],
+    [0.75, 6, 0, 0, 1, 2, 1.5],
+    [-0.75, 6, 2, 0, 1, 2, 5.5],
+    [0, 6, 0.75, Math.PI / 2, 1, 2, 1.5],
 ];
 
 const tempWall = new THREE.Object3D();
 
 const wallTexture = new THREE.TextureLoader().load('../textures/wall.png');
 
-const geometry = new THREE.BoxGeometry(0.2, 5, 5, 5);
+const geometry = new THREE.BoxGeometry(0.1, 1, 1, 5);
 const material = new THREE.MeshBasicMaterial({ map: wallTexture, color: 0xFFF8E7, side: THREE.DoubleSide});
 const walls = new THREE.InstancedMesh(geometry, material, wallInstances);
 

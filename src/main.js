@@ -26,7 +26,7 @@ upButton.addEventListener('click', function(){
 //scene.add(label);
 
 const div = document.createElement('div');
-div.appendChild(upButton);
+//div.appendChild(upButton);
 const divContainer = new CSS2DObject(div);
 scene.add(divContainer);
 
@@ -34,13 +34,13 @@ const light = new THREE.DirectionalLight( 0xffffff, 1 );
 light.position.set( 20, 30, 60 ); //default; light shining from top
 light.castShadow = true; // default false
 
-const gridHelper = new THREE.GridHelper(100, 100);
+const gridHelper = new THREE.GridHelper(20, 20);
 scene.add(floors);
 scene.add(walls, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.minDistance = 15;
-controls.maxDistance = 70;
+controls.minDistance = 5;
+controls.maxDistance = 60;
 
 function animate() {
  requestAnimationFrame(animate);
