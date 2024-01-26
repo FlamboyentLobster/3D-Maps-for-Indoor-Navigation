@@ -1,6 +1,4 @@
 
-
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -11,12 +9,20 @@
      <header>
       <h1>3D Building Map</h1>
      </header>
-     <div class = "hud">
-      <button class = "upButton" type = "button"><i class="ri-arrow-up-s-line"></i></button>  
+     <div class = "lefthud">
+      <button class = "editButton" type = "button"><i class="ri-edit-line"></i></button>  
+     </div>
+     <div class = "righthud">
+      <button class = "upButton" type = "button" onclick="raiseCamera()"><i class="ri-arrow-up-s-line"></i></button>  
       <button class = "downButton" type = "button"><i class="ri-arrow-down-s-line"></i></button> 
-      <button class = "extraButton" type = "button"><i class="ri-home-line"></i></button> 
+      <button class = "extraButton" type = "button"><i class="ri-layout-line"></i></button> 
     </div>
      <script type="module" src="./src/main.js">
+      import * as THREE from 'src/Camera';
+
+      function raiseCamera() {
+        camera.raiseFloor()
+      }
      </script>
   </body>
 </html>

@@ -25,11 +25,33 @@ h1, h2, h3, blockquote {
     margin-bottom: var(--spacing);
   }
 
-  .hud {
+  .lefthud {
+    position: fixed;
+    left: 50px;
+    height: 100%;
+    width: 80px;
+}
+
+  .righthud {
     position: fixed;
     right: 50px;
     height: 100%;
     width: 80px;
+}
+
+.editButton {
+  position: fixed;
+  top: 50px;
+  width: 60px;
+  height: 50px;
+  background: none;
+  font-size: 27px;
+  border: none;
+}
+
+.editButton:hover {
+  cursor: pointer;
+		border: solid 3px rgb(10, 2, 2);
 }
 
 .upButton {

@@ -42,11 +42,17 @@ const controls = new OrbitControls(camera, renderer.domElement);
 controls.minDistance = 5;
 controls.maxDistance = 60;
 
+
 function animate() {
  requestAnimationFrame(animate);
  controls.update();
- //CSSRenderer.render(scene, camera);
  renderer.render(scene, camera);
 }
 
 animate()
+
+document.getElementById("upButton").addEventListener("click", raiseFloor());
+
+function raiseFloor() {
+    camera.position.z += 10;
+}
