@@ -41,7 +41,27 @@ scene.add(walls, gridHelper);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.minDistance = 5;
 controls.maxDistance = 60;
+var cameraHeight = 0;
+var cameraPosition = 10;
 
+var raiseButton = document.querySelector('.upButton');
+var lowerButton = document.querySelector('.downButton');
+
+raiseButton.addEventListener('click', function() {
+    cameraHeight += 5
+    cameraPosition += 5
+    camera.position.setY(cameraPosition);
+    controls.target.set(0, cameraHeight, 0);
+    controls.update();
+})
+
+lowerButton.addEventListener('click', function() {
+    cameraHeight -= 5
+    cameraPosition -= 5
+    camera.position.setY(cameraPosition);
+    controls.target.set(0, cameraHeight, 0);
+    controls.update();
+})
 
 function animate() {
  requestAnimationFrame(animate);
@@ -51,8 +71,3 @@ function animate() {
 
 animate()
 
-document.getElementById("upButton").addEventListener("click", raiseFloor());
-
-function raiseFloor() {
-    camera.position.z += 10;
-}
