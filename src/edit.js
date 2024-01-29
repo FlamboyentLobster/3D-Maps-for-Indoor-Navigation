@@ -1,17 +1,13 @@
-import '../style.css'
+import '../edit.css'
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer';
 import scene from './Scene';
 import camera from './Camera';
 import renderer from './Renderer';
-import walls from './Walls';
-import floors from './Floors';
-//import stairs from './Stairs';
 
-const gridHelper = new THREE.GridHelper(20, 20);
-scene.add(floors);
-scene.add(walls, gridHelper);
+const gridHelper = new THREE.GridHelper(100, 100);
+scene.add(gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.minDistance = 5;
@@ -22,6 +18,7 @@ var cameraPosition = 10;
 var raiseButton = document.querySelector('.upButton');
 var lowerButton = document.querySelector('.downButton');
 var editButton = document.querySelector('.editButton');
+var saveButton = document.querySelector('.saveButton');
 
 raiseButton.addEventListener('click', function() {
     cameraHeight += 5
@@ -40,7 +37,11 @@ lowerButton.addEventListener('click', function() {
 })
 
 editButton.addEventListener('click', function() {
-    window.location.href ='edit.html';
+    window.location.href ='index.html';
+})
+
+saveButton.addEventListener('click', function() {
+   
 })
 
 function animate() {

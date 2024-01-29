@@ -54,6 +54,21 @@ h1, h2, h3, blockquote {
 		border: solid 3px rgb(10, 2, 2);
 }
 
+.saveButton {
+  position: fixed;
+  top: 50px;
+  width: 60px;
+  height: 50px;
+  background: none;
+  font-size: 27px;
+  border: none;
+}
+
+.saveButton:hover {
+  cursor: pointer;
+		border: solid 3px rgb(10, 2, 2);
+}
+
 .upButton {
   position: fixed;
   top: 400px;
