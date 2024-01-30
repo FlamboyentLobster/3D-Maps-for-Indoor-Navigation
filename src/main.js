@@ -1,16 +1,16 @@
 import '../style.css'
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer';
 import scene from './Scene';
 import camera from './Camera';
 import renderer from './Renderer';
-//import walls from './Walls';
+import walls from './Walls';
 import floors from './Floors';
 //import stairs from './Stairs';
 
 var wallInstances = 28; 
+var floorNo = 2;
 
 let wallPos = [
     [6.25, 1, 0, 0, 1, 2, 9.5], 
@@ -45,26 +45,6 @@ let wallPos = [
 
 const tempWall = new THREE.Object3D();
 
-const wallTexture = new THREE.TextureLoader().load('../textures/wall.png');
-
-const geometry = new THREE.BoxGeometry(0.1, 1, 1, 5);
-const material = new THREE.MeshBasicMaterial({ map: wallTexture, color: 0xFFF8E7, side: THREE.DoubleSide});
-const walls = new THREE.InstancedMesh(geometry, material, wallInstances);
-walls.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
-
-for (let i = 0; i < wallInstances; i++) {
-    tempWall.position.x = wallPos[i][0];
-    tempWall.position.y = wallPos[i][1];
-    tempWall.position.z = wallPos[i][2];
-    tempWall.rotation.y = wallPos[i][3];
-    tempWall.scale.x = wallPos[i][4];
-    tempWall.scale.y = wallPos[i][5];
-    tempWall.scale.z = wallPos[i][6];
-  
-    tempWall.updateMatrix();
-    walls.setMatrixAt(i, tempWall.matrix)
-}
-
 const gridHelper = new THREE.GridHelper(20, 20);
 scene.add(floors);
 scene.add(walls, gridHelper);
@@ -78,10 +58,11 @@ var cameraPosition = 10;
 var raiseButton = document.querySelector('.upButton');
 var lowerButton = document.querySelector('.downButton');
 var editButton = document.querySelector('.editButton');
-var extraButton = document.querySelector('.extraButton');
+var switchBox = document.querySelector('.switch');
 
-var gui = new GUI();
-gui.add( walls, 'count', 5, wallInstances );
+var count = 0;
+var currentFloor = 1;
+var toggled = false;
 		
 raiseButton.addEventListener('click', function() {
     cameraHeight += 5
@@ -103,9 +84,25 @@ editButton.addEventListener('click', function() {
     window.location.href ='edit.html';
 })
 
-extraButton.addEventListener('click', function() {
-    wallInstances = 12;
+switchBox.addEventListener('change', function() {
+  if (toggled == false) {
+    for (let j = 0; j < wallInstances; j++) {
+        if (wallPos[j][1] == currentFloor) {
+            count = count + 1;
+        }
+    }
+    walls.count = count;
+    floors.count = 1;
+    count = 0;
+    toggled = true;
+  } 
+  else {
+    walls.count = wallInstances;
+    floors.count = floorNo;
+    toggled = false;
+  }
 })
+
 
 function animate() {
  requestAnimationFrame(animate);
