@@ -4,7 +4,7 @@ top: 0;
 left: 0;
 }
 
-h1, h2, h3, blockquote {
+h1, blockquote {
   color: #000000;
   width: 100%;
   margin: 0px auto;
@@ -13,7 +13,26 @@ h1, h2, h3, blockquote {
   font-family: elevon, sans-serif;
   font-weight: 700;
   font-style: normal;
- 
+}
+
+h2 {
+  color: #000000;
+  position: fixed;
+  font-family: elevon, sans-serif;
+  font-style: normal;
+  right: 355px;
+  top: 100px;
+  font-size: 22px;
+}
+
+h3 {
+  color: #000000;
+  position: fixed;
+  font-family: elevon, sans-serif;
+  font-style: normal;
+  right: 370px;
+  top: 190px;
+  font-size: 22px;
 }
 
   header {
@@ -24,6 +43,14 @@ h1, h2, h3, blockquote {
     padding: 0.5rem;
     margin-bottom: var(--spacing);
   }
+
+  .tophud {
+    position: fixed;
+    top: 150px;
+    right: 250px;
+    height: 150px;
+    width: 300px;
+}
 
   .lefthud {
     position: fixed;
@@ -50,21 +77,6 @@ h1, h2, h3, blockquote {
 }
 
 .editButton:hover {
-  cursor: pointer;
-		border: solid 3px rgb(10, 2, 2);
-}
-
-.saveButton {
-  position: fixed;
-  top: 50px;
-  width: 60px;
-  height: 50px;
-  background: none;
-  font-size: 27px;
-  border: none;
-}
-
-.saveButton:hover {
   cursor: pointer;
 		border: solid 3px rgb(10, 2, 2);
 }
@@ -110,6 +122,82 @@ h1, h2, h3, blockquote {
 }
 
 .extraButton:hover {
+  cursor: pointer;
+		border: solid 3px rgb(10, 2, 2);
+}
+
+.rightButton {
+  position: fixed;
+  right: 250px;
+  width: 60px;
+  height: 50px;
+  background: none;
+  font-size: 27px;
+  border: none;
+}
+
+.rightButton:hover {
+  cursor: pointer;
+		border: solid 3px rgb(10, 2, 2);
+}
+
+.leftButton {
+  position: fixed;
+  width: 60px;
+  height: 50px;
+  background: none;
+  font-size: 27px;
+  border: none;
+}
+
+.leftButton:hover {
+  cursor: pointer;
+		border: solid 3px rgb(10, 2, 2);
+}
+
+.right2Button {
+  position: fixed;
+  right: 250px;
+  top: 240px;
+  width: 60px;
+  height: 50px;
+  background: none;
+  font-size: 27px;
+  border: none;
+}
+
+.right2Button:hover {
+  cursor: pointer;
+		border: solid 3px rgb(10, 2, 2);
+}
+
+.left2Button {
+  position: fixed;
+  top: 240px;
+  width: 60px;
+  height: 50px;
+  background: none;
+  font-size: 27px;
+  border: none;
+}
+
+.left2Button:hover {
+  cursor: pointer;
+		border: solid 3px rgb(10, 2, 2);
+}
+
+.goButton {
+  position: fixed;
+  top: 310px;
+  right: 300px;
+  width: 60px;
+  height: 50px;
+  background: none;
+  font-size: 27px;
+  border: none;
+}
+
+.goButton:hover {
   cursor: pointer;
 		border: solid 3px rgb(10, 2, 2);
 }
