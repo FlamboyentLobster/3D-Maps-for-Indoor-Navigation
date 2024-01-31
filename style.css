@@ -96,6 +96,13 @@ h3 {
 		border: solid 3px rgb(10, 2, 2);
 }
 
+.upButton:disabled,
+.upButton[disabled]{
+  color: #cccccc;
+  pointer-events: none;
+}
+
+
 .downButton {
   position: fixed;
   top: 470px;
@@ -109,6 +116,12 @@ h3 {
 .downButton:hover {
   cursor: pointer;
 		border: solid 3px rgb(10, 2, 2);
+}
+
+.downButton:disabled,
+.downButton[disabled]{
+  color: #cccccc;
+  pointer-events: none;
 }
 
 .extraButton {
@@ -229,10 +242,10 @@ h3 {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #0c0a0a;
+  background-color: #000000;
   -webkit-transition: .4s;
   transition: .4s;
-}
+} 
 
 .slider:before {
   position: absolute;
@@ -247,11 +260,11 @@ h3 {
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #cccccc;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #cccccc;
 }
 
 input:checked + .slider:before {

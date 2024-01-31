@@ -10,7 +10,6 @@ import floors from './Floors';
 //import stairs from './Stairs';
 
 var wallInstances = 28; 
-var floorNo = 2;
 
 let wallPos = [
     [6.25, 1, 0, 0, 1, 2, 9.5], 
@@ -59,25 +58,83 @@ var raiseButton = document.querySelector('.upButton');
 var lowerButton = document.querySelector('.downButton');
 var editButton = document.querySelector('.editButton');
 var switchBox = document.querySelector('.switch');
+raiseButton.disabled = true;
+lowerButton.disabled = true;
 
 var count = 0;
-var currentFloor = 1;
+var currentFloor = 0;
+var floorHeight = 1;
 var toggled = false;
+var floorNo = 1;
+var tempJ = 0;
+var x = 0;
+var tempFloorHeight = 0;
 		
 raiseButton.addEventListener('click', function() {
+  currentFloor += 1;
+  if (currentFloor > floorNo) {
+    currentFloor -= 1;
+    return
+  }
+  else {
     cameraHeight += 5
     cameraPosition += 5
     camera.position.setY(cameraPosition);
     controls.target.set(0, cameraHeight, 0);
     controls.update();
+
+    floorHeight += 5;
+    for (let j = 0; j < wallInstances; j++) {
+      if (wallPos[j][1] == floorHeight) {
+          count = count + 1;
+      }
+    }
+    walls.count = count;
+
+    for (let j = 0; j < wallInstances; j++) {
+      if (wallPos[j][1] == floorHeight) {
+          tempJ = j;
+          break;
+      }
+    }
+    window.alert(tempJ);
+    count = 0
+  }
 })
 
 lowerButton.addEventListener('click', function() {
+  currentFloor -= 1;
+  if (currentFloor < 0) {
+    currentFloor += 1;
+    return
+  }
+  else {
     cameraHeight -= 5
     cameraPosition -= 5
     camera.position.setY(cameraPosition);
     controls.target.set(0, cameraHeight, 0);
     controls.update();
+
+    tempFloorHeight = floorHeight;
+    floorHeight -= 5;
+    for (let j = 0; j < wallInstances; j++) {
+      if (wallPos[j][1] == floorHeight) {
+          count = count + 1;
+      }
+    }
+    walls.count = count;
+
+    for (let j = 0; j < wallInstances; j++) {
+      if (wallPos[j][1] == floorHeight) {
+          tempJ = j;
+          break;
+      }
+    }
+    window.alert(tempJ);
+
+
+    count = 0
+  }
 })
 
 editButton.addEventListener('click', function() {
@@ -87,22 +144,32 @@ editButton.addEventListener('click', function() {
 switchBox.addEventListener('change', function() {
   if (toggled == false) {
     for (let j = 0; j < wallInstances; j++) {
-        if (wallPos[j][1] == currentFloor) {
+        if (wallPos[j][1] == floorHeight) {
             count = count + 1;
         }
     }
+    raiseButton.disabled = false;
+    lowerButton.disabled = false;
     walls.count = count;
     floors.count = 1;
     count = 0;
     toggled = true;
   } 
   else {
+    cameraHeight = 0;
+    cameraPosition = 10;
+    camera.position.setY(cameraPosition);
+    controls.target.set(0, cameraHeight, 0);
+    controls.update();
+    floorHeight = 1;
+    currentFloor = 0;
+    raiseButton.disabled = true;
+    lowerButton.disabled = true;
     walls.count = wallInstances;
     floors.count = floorNo;
     toggled = false;
   }
 })
-
 
 function animate() {
  requestAnimationFrame(animate);
@@ -112,3 +179,27 @@ function animate() {
 
 animate()
 
+/*
+
+    for (let j = 0; j < wallInstances; j++) {
+      if (wallPos[j][1] == floorHeight) {
+          tempJ = j;
+          break;
+      
+
+
+    for (let i = tempJ; i < count + tempJ; i++) {
+      tempWall.position.x = wallPos[i][0];
+      tempWall.position.y = wallPos[i][1];
+      tempWall.position.z = wallPos[i][2];
+      tempWall.rotation.y = wallPos[i][3];
+      tempWall.scale.x = wallPos[i][4];
+      tempWall.scale.y = wallPos[i][5];
+      tempWall.scale.z = wallPos[i][6];
+      tempWall.updateMatrix();
+      walls.setMatrixAt(x, tempWall.matrix)
+      x += 1;
+  }
+
+
+*/
