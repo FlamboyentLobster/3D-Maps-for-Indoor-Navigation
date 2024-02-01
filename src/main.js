@@ -97,7 +97,6 @@ raiseButton.addEventListener('click', function() {
           break;
       }
     }
-    window.alert(tempJ);
     count = 0
   }
 })
@@ -130,10 +129,7 @@ lowerButton.addEventListener('click', function() {
           break;
       }
     }
-    window.alert(tempJ);
-
-
-    count = 0
+   count = 0
   }
 })
 
