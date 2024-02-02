@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+//const { wallPos } = require('./edit.js');
 
 var wallInstances = 28; 
 
@@ -42,6 +43,7 @@ const wallTexture = new THREE.TextureLoader().load('../textures/wall.png');
 const geometry = new THREE.BoxGeometry(0.1, 1, 1, 5);
 const material = new THREE.MeshBasicMaterial({ map: wallTexture, color: 0xFFF8E7, side: THREE.DoubleSide});
 const walls = new THREE.InstancedMesh(geometry, material, wallInstances);
+walls.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
 
 for (let i = 0; i < wallInstances; i++) {
     tempWall.position.x = wallPos[i][0];
