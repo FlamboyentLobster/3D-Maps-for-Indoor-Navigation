@@ -14,13 +14,20 @@ var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
 var toggle = false;
 
-let tempwallPos = [1000][7];
-let tempentrancePos = [1000][7];
-let tempfloorsPos = [1000][7];
+// walls = xValue, yValue, zValue, rotation, thickness, length, name 
+
+var tempwallPos =  [[],[],[],[],[],[]];
+var tempentrancePos = [[],[]];
+var tempfloorsPos = [[],[]];
 var wallNo = 0;
 var currentWall = -1;
 var currentObject = new THREE.Object3D;
 var floorNo = 0;
+
+function loadWalls() {
+
+    
+}
 
 function onMouseMove( event ) {
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -77,6 +84,7 @@ editButton.addEventListener('click', function() {
 })
 
 wallButton.addEventListener('click', function() {
+window.alert(tempwallPos.length)
 currentWall += 1;
 const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
 const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
@@ -112,7 +120,3 @@ function animate() {
 }
 
 animate()
-
-module.exports = {tempwallPos};
-module.exports = {wallNo};
-module.exports = {floorNo};
