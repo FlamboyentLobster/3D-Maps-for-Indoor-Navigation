@@ -14,19 +14,30 @@ var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
 var toggle = false;
 
-// walls = xValue, yValue, zValue, rotation, thickness, length, name 
+// walls = xValue, yValue, zValue, rotation, thickness, length, name, id
+// floors = 
+// entrances =
+// stairs =
 
-var tempwallPos =  [[],[],[],[],[],[]];
+var tempwallPos =  [[],[],[],[],[],[],[], []];
 var tempentrancePos = [[],[]];
 var tempfloorsPos = [[],[]];
 var wallNo = 0;
 var currentWall = -1;
 var currentObject = new THREE.Object3D;
 var floorNo = 0;
+const objects = [];
 
-function loadWalls() {
+function loadObjects() {
+    const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
+    const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
+    const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
+    const wall = new THREE.Mesh(geo, mat);
 
     
+
+
+
 }
 
 function onMouseMove( event ) {
@@ -64,7 +75,7 @@ window.addEventListener('resize', onWindowResize);
 window.addEventListener('mousemove', onMouseMove, false);
 window.addEventListener('click', onMouseClick, false);
 
-const objects = [];
+
 
 const gridHelper = new THREE.GridHelper(100, 100);
 scene.add(gridHelper);
