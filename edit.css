@@ -23,7 +23,17 @@ canvas {
       font-style: normal;
       right: 510px;
       font-size: 22px;
-      top: 140px;
+      top: 110px;
+    }
+
+    h3 {
+      color: #000000;
+      position: fixed;
+      font-family: elevon, sans-serif;
+      font-style: normal;
+      right: 510px;
+      font-size: 22px;
+      top: 200px;
     }
     
       header {
@@ -214,6 +224,37 @@ canvas {
     }
     
     .minusButton:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
+
+    .plus2Button {
+      position: fixed;
+      right: 400px;
+      top: 250px;
+      width: 60px;
+      height: 50px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .plus2Button:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
+
+    .minus2Button {
+      position: fixed;
+      width: 60px;
+      height: 50px;
+      top: 250px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .minus2Button:hover {
       cursor: pointer;
             border: solid 3px rgb(10, 2, 2);
     }

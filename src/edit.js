@@ -28,16 +28,27 @@ var currentObject = new THREE.Object3D;
 var floorNo = 0;
 const objects = [];
 
+/*
+labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(window.innerWidth, window.innerHeight);
+labelRenderer.domElement.style.position = "absolute";
+labelRenderer.domElement.style.top = "0px";
+document.body.appendChild(labelRenderer.domElement);
+*/
+
+const lengthDiv = document.createElement("div");
+lengthDiv.className = "label"
+lengthDiv.textContent = "hello"
+lengthDiv.style.marginTop = "-1em"
+const lengthLabel = new CSS2DObject(lengthDiv);
+lengthLabel.position.set(0, 0, 0);
+scene.add(lengthLabel)
+
 function loadObjects() {
     const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
     const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
     const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
     const wall = new THREE.Mesh(geo, mat);
-
-    
-
-
-
 }
 
 function onMouseMove( event ) {
@@ -69,13 +80,12 @@ function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
+    //labelRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 window.addEventListener('resize', onWindowResize);
 window.addEventListener('mousemove', onMouseMove, false);
 window.addEventListener('click', onMouseClick, false);
-
-
 
 const gridHelper = new THREE.GridHelper(100, 100);
 scene.add(gridHelper);
@@ -95,7 +105,6 @@ editButton.addEventListener('click', function() {
 })
 
 wallButton.addEventListener('click', function() {
-window.alert(tempwallPos.length)
 currentWall += 1;
 const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
 const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
