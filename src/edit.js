@@ -103,7 +103,7 @@ function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize( window.innerWidth, window.innerHeight );
-    //labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 window.addEventListener('resize', onWindowResize);
@@ -173,7 +173,7 @@ minus2Button.addEventListener('click', function() {
 })
 
 saveButton.addEventListener('click', function() {
-   
+    window.alert(objects.length)
 })
 
 function animate() {
