@@ -19,7 +19,7 @@ var toggle = false;
 // entrances =
 // stairs =
 
-var tempwallPos =  [[],[],[],[],[],[],[], []];
+var tempwallPos =  [[],[],[],[],[],[],[],[]];
 var tempentrancePos = [[],[]];
 var tempfloorsPos = [[],[]];
 var wallNo = 0;

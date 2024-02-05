@@ -31,7 +31,7 @@ canvas {
       position: fixed;
       font-family: elevon, sans-serif;
       font-style: normal;
-      right: 510px;
+      right: 500px;
       font-size: 22px;
       top: 240px;
     }
@@ -74,7 +74,6 @@ canvas {
         top: 50px;
         bottom: 50px;
         width: 300px;
-        background-color: #cc9999;
     }
     
     .editButton {
@@ -108,51 +107,6 @@ canvas {
         cursor: pointer;
               border: solid 3px rgb(10, 2, 2);
       }
-    
-    .upButton {
-      position: fixed;
-      top: 400px;
-      width: 60px;
-      height: 50px;
-      background: none;
-      font-size: 40px;
-      border: none;
-    }
-    
-    .upButton:hover {
-      cursor: pointer;
-            border: solid 3px rgb(10, 2, 2);
-    }
-    
-    .downButton {
-      position: fixed;
-      top: 470px;
-      width: 60px;
-      height: 50px;
-      background: none;
-      font-size: 40px;
-      border: none;
-    }
-    
-    .downButton:hover {
-      cursor: pointer;
-            border: solid 3px rgb(10, 2, 2);
-    }
-    
-    .extraButton {
-      position: fixed;
-      top: 330px;
-      width: 60px;
-      height: 50px;
-      background: none;
-      font-size: 27px;
-      border: none;
-    }
-    
-    .extraButton:hover {
-      cursor: pointer;
-            border: solid 3px rgb(10, 2, 2);
-    }
 
     .groundlevelButton {
       position: fixed;
@@ -271,6 +225,86 @@ canvas {
     }
     
     .wallButton:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
+
+    .entranceButton {
+      position: fixed;
+      right: 150px;
+      top: 180px;
+      width: 100px;
+      height: 100px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .entranceButton:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
+
+    .stairsButton {
+      position: fixed;
+      right: 150px;
+      top: 280px;
+      width: 100px;
+      height: 100px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .stairsButton:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
+
+    .hallwayNodeButton {
+      position: fixed;
+      right: 150px;
+      top: 380px;
+      width: 100px;
+      height: 100px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .hallwayNodeButton:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
+
+    .stairsNodeButton {
+      position: fixed;
+      right: 150px;
+      top: 480px;
+      width: 100px;
+      height: 100px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .stairsNodeButton:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
+
+    .entranceNodeButton {
+      position: fixed;
+      right: 150px;
+      top: 580px;
+      width: 100px;
+      height: 100px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .entranceNodeButton:hover {
       cursor: pointer;
             border: solid 3px rgb(10, 2, 2);
     }
