@@ -28,21 +28,36 @@ var currentObject = new THREE.Object3D;
 var floorNo = 0;
 const objects = [];
 
-/*
-labelRenderer = new CSS2DRenderer();
+const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
 labelRenderer.domElement.style.position = "absolute";
 labelRenderer.domElement.style.top = "0px";
+labelRenderer.domElement.style.pointerEvents = 'none';
 document.body.appendChild(labelRenderer.domElement);
-*/
 
 const lengthDiv = document.createElement("div");
-lengthDiv.className = "label"
-lengthDiv.textContent = "hello"
-lengthDiv.style.marginTop = "-1em"
+lengthDiv.textContent = "Length:"
 const lengthLabel = new CSS2DObject(lengthDiv);
-lengthLabel.position.set(0, 0, 0);
 scene.add(lengthLabel)
+lengthLabel.position.set(1000, 1000, 1000) 
+
+const rotationDiv = document.createElement("div");
+rotationDiv.textContent = "Rotation:"
+const rotationLabel = new CSS2DObject(rotationDiv);
+scene.add(rotationLabel)
+rotationLabel.position.set(1000, 1000, 1000) 
+
+const xDiv = document.createElement("div");
+xDiv.textContent = "X:"
+const xLabel = new CSS2DObject(xDiv);
+scene.add(xLabel)
+xLabel.position.set(1000, 1000, 1000) 
+
+const zDiv = document.createElement("div");
+zDiv.textContent = "Z:"
+const zLabel = new CSS2DObject(zDiv);
+scene.add(zLabel)
+zLabel.position.set(1000, 1000, 1000) 
 
 function loadObjects() {
     const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
@@ -60,6 +75,14 @@ function onMouseMove( event ) {
 
     if (toggle == true) {
         currentObject.position.set(intersects.x, intersects.y + 1, intersects.z)
+        lengthLabel.position.set(intersects.x, intersects.y + 1.4, intersects.z) 
+        lengthDiv.textContent = "Length:" + currentObject.scale.z
+        rotationLabel.position.set(intersects.x, intersects.y + 1, intersects.z) 
+        rotationDiv.textContent = "Rotation:" + currentObject.rotation.y.toFixed(2)
+        xLabel.position.set(intersects.x, intersects.y + 0.6, intersects.z) 
+        xDiv.textContent = "X:" + intersects.x.toFixed(2)
+        zLabel.position.set(intersects.x, intersects.y + 0.2, intersects.z) 
+        zDiv.textContent = "Z:" +  intersects.z.toFixed(2)
     }  
 }
 
@@ -99,6 +122,8 @@ var saveButton = document.querySelector('.saveButton');
 var wallButton = document.querySelector('.wallButton');
 var plusButton = document.querySelector('.plusButton');
 var minusButton = document.querySelector('.minusButton');
+var plus2Button = document.querySelector('.plus2Button');
+var minus2Button = document.querySelector('.minus2Button');
 
 editButton.addEventListener('click', function() {
     window.location.href ='index.html';
@@ -122,11 +147,29 @@ objects.push(wallClone);
 })
 
 plusButton.addEventListener('click', function() {
-    
+    currentObject.scale.z += 0.25;
+    lengthDiv.textContent = "Length:" + currentObject.scale.z
 })
 
 minusButton.addEventListener('click', function() {
-   
+    if (currentObject.scale.z != 0) {
+    currentObject.scale.z -= 0.25;
+    lengthDiv.textContent = "Length:" + currentObject.scale.z
+    }
+})
+
+plus2Button.addEventListener('click', function() {
+    if (currentObject.rotation.y < 3.14) {
+    currentObject.rotation.y += Math.PI / 12;
+    rotationDiv.textContent = "Rotation:" + currentObject.rotation.y.toFixed(2)
+    }
+})
+
+minus2Button.addEventListener('click', function() {
+    if (currentObject.rotation.y > 0.1) {
+    currentObject.rotation.y -= Math.PI / 12;
+    rotationDiv.textContent = "Rotation:" + currentObject.rotation.y.toFixed(2)
+    }
 })
 
 saveButton.addEventListener('click', function() {
@@ -136,6 +179,7 @@ saveButton.addEventListener('click', function() {
 function animate() {
  controls.update();
  renderer.render(scene, camera);
+ labelRenderer.render(scene, camera);
  requestAnimationFrame(animate);
 }
 
