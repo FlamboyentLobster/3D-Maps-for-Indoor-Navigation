@@ -24,6 +24,10 @@ var tempentrancePos = [[],[]];
 var tempfloorsPos = [[],[]];
 var wallNo = 0;
 var currentWall = -1;
+var currentEntrance = -1;
+var currentEntranceNode = -1;
+var currentStairsNode = -1;
+var currentHallwayNode = -1;
 var currentObject = new THREE.Object3D;
 var floorNo = 0;
 const objects = [];
@@ -60,10 +64,7 @@ scene.add(zLabel)
 zLabel.position.set(1000, 1000, 1000) 
 
 function loadObjects() {
-    const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
-    const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
-    const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
-    const wall = new THREE.Mesh(geo, mat);
+
 }
 
 function onMouseMove( event ) {
@@ -89,14 +90,16 @@ function onMouseMove( event ) {
 function onMouseClick( event ) {
     raycaster.setFromCamera(mouse, camera)
     const intersects = raycaster.intersectObjects(objects, false)
-    if (intersects.length > 0) {
+    
         if (toggle == false) {
+            if (intersects.length > 0) {
             currentObject = scene.getObjectByName(intersects[0].object.name)
             toggle = true
+            }
         } else {
             toggle = false
         }
-    }
+    
 }
 
 function onWindowResize() {
@@ -110,7 +113,7 @@ window.addEventListener('resize', onWindowResize);
 window.addEventListener('mousemove', onMouseMove, false);
 window.addEventListener('click', onMouseClick, false);
 
-const gridHelper = new THREE.GridHelper(100, 100);
+const gridHelper = new THREE.GridHelper(20, 20);
 scene.add(gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -120,6 +123,11 @@ controls.maxDistance = 60;
 var editButton = document.querySelector('.editButton');
 var saveButton = document.querySelector('.saveButton');
 var wallButton = document.querySelector('.wallButton');
+var entranceButton = document.querySelector('.entranceButton');
+var stairsButton = document.querySelector('.stairsButton');
+var hallwayNodeButton = document.querySelector('.hallwayNodeButton');
+var stairsNodeButton = document.querySelector('.stairsNodeButton');
+var entranceNodeButton = document.querySelector('.entranceNodeButton');
 var plusButton = document.querySelector('.plusButton');
 var minusButton = document.querySelector('.minusButton');
 var plus2Button = document.querySelector('.plus2Button');
@@ -144,6 +152,68 @@ wallClone.position.y = 1;
 wallClone.name = 'wall' + currentWall;
 wallClone.updateMatrix();
 objects.push(wallClone);
+})
+
+entranceButton.addEventListener('click', function() {
+    currentEntrance += 1;
+    const entranceTex = new THREE.TextureLoader().load('../textures/door.png');
+    const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
+    const mat = new THREE.MeshBasicMaterial({map: entranceTex, color: 0xFFF8E7, side: THREE.DoubleSide});
+    const entrance = new THREE.Mesh(geo, mat);
+    
+    const entranceClone = entrance.clone();
+    scene.add(entranceClone);
+    
+    entranceClone.scale.y = 2;
+    entranceClone.position.y = 1;
+    entranceClone.name = 'entrance' + currentEntrance;
+    entranceClone.updateMatrix();
+    objects.push(entranceClone);
+})
+
+hallwayNodeButton.addEventListener('click', function() {
+        currentHallwayNode += 1;
+        const geo = new THREE.SphereGeometry(0.2);
+        const mat = new THREE.MeshBasicMaterial({color: 0xff0000});
+        const hallwayNode = new THREE.Mesh(geo, mat);
+        
+        const hallwayNodeClone = hallwayNode.clone();
+        scene.add(hallwayNodeClone);
+        
+        hallwayNodeClone.position.y = 1;
+        hallwayNodeClone.name = 'hallwayNode' + currentHallwayNode;
+        hallwayNodeClone.updateMatrix();
+        objects.push(hallwayNodeClone);
+})
+
+entranceNodeButton.addEventListener('click', function() {
+            currentEntranceNode += 1;
+            const geo = new THREE.SphereGeometry(0.2);
+            const mat = new THREE.MeshBasicMaterial({color: 0x008000});
+            const entranceNode = new THREE.Mesh(geo, mat);
+            
+            const entranceNodeClone = entranceNode.clone();
+            scene.add(entranceNodeClone);
+            
+            entranceNodeClone.position.y = 1;
+            entranceNodeClone.name = 'entranceNode' + currentEntranceNode;
+            entranceNodeClone.updateMatrix();
+            objects.push(entranceNodeClone);
+})
+
+stairsNodeButton.addEventListener('click', function() {
+                currentStairsNode += 1;
+                const geo = new THREE.SphereGeometry(0.2);
+                const mat = new THREE.MeshBasicMaterial({color: 0x0000FF});
+                const stairsNode = new THREE.Mesh(geo, mat);
+                
+                const stairsNodeClone = stairsNode.clone();
+                scene.add(stairsNodeClone);
+                
+                stairsNodeClone.position.y = 1;
+                stairsNodeClone.name = 'stairsNode' + currentStairsNode;
+                stairsNodeClone.updateMatrix();
+                objects.push(stairsNodeClone);
 })
 
 plusButton.addEventListener('click', function() {
