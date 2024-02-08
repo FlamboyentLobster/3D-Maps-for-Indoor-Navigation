@@ -156,7 +156,7 @@ objects.push(wallClone);
 
 entranceButton.addEventListener('click', function() {
     currentEntrance += 1;
-    const entranceTex = new THREE.TextureLoader().load('../textures/entrance.png');
+    const entranceTex = new THREE.TextureLoader().load('../textures/wall2.jpg');
     const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
     const mat = new THREE.MeshBasicMaterial({map: entranceTex, color: 0xFFF8E7, side: THREE.DoubleSide});
     const entrance = new THREE.Mesh(geo, mat);
@@ -243,27 +243,35 @@ minus2Button.addEventListener('click', function() {
 })
 
 var empty = 0;
+//walls = xValue, yValue, zValue, rotation, thickness, length, name, id
+
 
 saveButton.addEventListener('click', function() {
     for (let x = 0; x < objects.length;x++) {
         if (objects[x].name.length == 5) {
-            while (tempwallPos[empty][0] == undefined) {
-
-
+            while (tempwallPos[empty][0] != undefined) {
+                empty += 1;
             }
-            empty = 0
-        }
-
+            tempwallPos[empty][0] = objects[x].position.x
+            tempwallPos[empty][1] = objects[x].position.y
+            tempwallPos[empty][2] = objects[x].position.z
+            tempwallPos[empty][3] = objects[x].rotation.y
+            tempwallPos[empty][4] = objects[x].scale.y
+            tempwallPos[empty][5] = objects[x].scale.z
+            tempwallPos[empty][6] = objects[x].name.substring(0, 4)
+            tempwallPos[empty][7] = objects[x].name.substring(4, 5)
+        } else {
+        
         if (objects[x].name.length == 9) {
             while (tempentrancePos[empty][0] == undefined) {
-
-
+                empty += 1;
             }
-            empty = 0
         }
-
+    }
     }
 })
+
+
 
 function animate() {
  controls.update();

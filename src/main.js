@@ -167,6 +167,8 @@ switchBox.addEventListener('change', function() {
   }
 })
 
+
+
 function animate() {
  requestAnimationFrame(animate);
  controls.update();
@@ -174,7 +176,6 @@ function animate() {
 }
 
 animate()
-
 /*
 
     for (let j = 0; j < wallInstances; j++) {

@@ -1,9 +1,6 @@
 import * as THREE from 'three';
-//const { wallPos } = require('./edit.js');
 
 var wallInstances = 28; 
-
-// [x, heightFromGround, z, rotation, scaleX, scaleY, lengthZ]
 
 let wallPos = [
     [6.25, 1, 0, 0, 2, 9.5], 
