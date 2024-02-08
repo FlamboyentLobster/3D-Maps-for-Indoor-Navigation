@@ -156,7 +156,7 @@ objects.push(wallClone);
 
 entranceButton.addEventListener('click', function() {
     currentEntrance += 1;
-    const entranceTex = new THREE.TextureLoader().load('../textures/door.png');
+    const entranceTex = new THREE.TextureLoader().load('../textures/entrance.png');
     const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
     const mat = new THREE.MeshBasicMaterial({map: entranceTex, color: 0xFFF8E7, side: THREE.DoubleSide});
     const entrance = new THREE.Mesh(geo, mat);
@@ -196,7 +196,7 @@ entranceNodeButton.addEventListener('click', function() {
             scene.add(entranceNodeClone);
             
             entranceNodeClone.position.y = 1;
-            entranceNodeClone.name = 'entranceNode' + currentEntranceNode;
+            entranceNodeClone.name = 'entranceNode' + " " +  currentEntranceNode;
             entranceNodeClone.updateMatrix();
             objects.push(entranceNodeClone);
 })
@@ -211,7 +211,7 @@ stairsNodeButton.addEventListener('click', function() {
                 scene.add(stairsNodeClone);
                 
                 stairsNodeClone.position.y = 1;
-                stairsNodeClone.name = 'stairsNode' + currentStairsNode;
+                stairsNodeClone.name = 'stairsNode' + " " + currentStairsNode;
                 stairsNodeClone.updateMatrix();
                 objects.push(stairsNodeClone);
 })
@@ -242,8 +242,27 @@ minus2Button.addEventListener('click', function() {
     }
 })
 
+var empty = 0;
+
 saveButton.addEventListener('click', function() {
-    window.alert(objects.length)
+    for (let x = 0; x < objects.length;x++) {
+        if (objects[x].name.length == 5) {
+            while (tempwallPos[empty][0] == undefined) {
+
+
+            }
+            empty = 0
+        }
+
+        if (objects[x].name.length == 9) {
+            while (tempentrancePos[empty][0] == undefined) {
+
+
+            }
+            empty = 0
+        }
+
+    }
 })
 
 function animate() {
