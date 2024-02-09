@@ -6,6 +6,7 @@ import scene from './Scene';
 import camera from './Camera';
 import renderer from './Renderer';
 import floors from './Floors';
+import objects from './Objects';
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -30,7 +31,6 @@ var currentStairsNode = -1;
 var currentHallwayNode = -1;
 var currentObject = new THREE.Object3D;
 var floorNo = 0;
-const objects = [];
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -247,6 +247,7 @@ var empty = 0;
 
 
 saveButton.addEventListener('click', function() {
+    window.alert(objects.length)
     for (let x = 0; x < objects.length;x++) {
         if (objects[x].name.length == 5) {
             while (tempwallPos[empty][0] != undefined) {
