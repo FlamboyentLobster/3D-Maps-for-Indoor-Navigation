@@ -272,8 +272,6 @@ saveButton.addEventListener('click', function() {
     }
 })
 
-
-
 function animate() {
  controls.update();
  renderer.render(scene, camera);
