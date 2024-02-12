@@ -16,11 +16,6 @@ var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
 var toggle = false;
 
-// walls = xValue, yValue, zValue, rotation, thickness, length, name, id
-// floors = 
-// entrances =
-// stairs =
-
 var tempwallPos =  [[],[],[],[],[],[],[],[]];
 var tempentrancePos = [[],[]];
 var tempfloorsPos = [[],[]];
@@ -32,11 +27,6 @@ var currentStairsNode = -1;
 var currentHallwayNode = -1;
 var currentObject = new THREE.Object3D;
 var floorNo = 0;
-
-var loader = new THREE.FileLoader();
-loader.load( "src/3DBuilding.txt", function( text ) {
-  window.alert(text)
-} );
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -69,9 +59,40 @@ const zLabel = new CSS2DObject(zDiv);
 scene.add(zLabel)
 zLabel.position.set(1000, 1000, 1000) 
 
-function loadObjects() {
+const gridHelper = new THREE.GridHelper(20, 20);
+scene.add(gridHelper);
 
-}
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.minDistance = 5;
+controls.maxDistance = 60;
+
+var editButton = document.querySelector('.editButton');
+var saveButton = document.querySelector('.saveButton');
+var wallButton = document.querySelector('.wallButton');
+var entranceButton = document.querySelector('.entranceButton');
+var stairsButton = document.querySelector('.stairsButton');
+var hallwayNodeButton = document.querySelector('.hallwayNodeButton');
+var stairsNodeButton = document.querySelector('.stairsNodeButton');
+var entranceNodeButton = document.querySelector('.entranceNodeButton');
+var plusButton = document.querySelector('.plusButton');
+var minusButton = document.querySelector('.minusButton');
+var plus2Button = document.querySelector('.plus2Button');
+var minus2Button = document.querySelector('.minus2Button');
+
+// to do --------------------------------------------------------------------
+//walls = xValue, yValue, zValue, rotation, thickness, length, name, id
+//entrance = xValue, yValue, zValue, rotation, thickness, length, name, id
+//stairs = xValue, yValue, zValue, rotation, thickness, length, name, id
+//nodes = xValue, yValue, zValue, name, id
+
+var loader = new THREE.FileLoader();
+loader.load( "src/3DBuilding.txt", function( text ) {
+  //window.alert(text)
+} );
+
+window.addEventListener('resize', onWindowResize);
+window.addEventListener('mousemove', onMouseMove, false);
+window.addEventListener('click', onMouseClick, false);
 
 function onMouseMove( event ) {
     mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
@@ -115,49 +136,25 @@ function onWindowResize() {
     labelRenderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-window.addEventListener('resize', onWindowResize);
-window.addEventListener('mousemove', onMouseMove, false);
-window.addEventListener('click', onMouseClick, false);
-
-const gridHelper = new THREE.GridHelper(20, 20);
-scene.add(gridHelper);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-controls.minDistance = 5;
-controls.maxDistance = 60;
-
-var editButton = document.querySelector('.editButton');
-var saveButton = document.querySelector('.saveButton');
-var wallButton = document.querySelector('.wallButton');
-var entranceButton = document.querySelector('.entranceButton');
-var stairsButton = document.querySelector('.stairsButton');
-var hallwayNodeButton = document.querySelector('.hallwayNodeButton');
-var stairsNodeButton = document.querySelector('.stairsNodeButton');
-var entranceNodeButton = document.querySelector('.entranceNodeButton');
-var plusButton = document.querySelector('.plusButton');
-var minusButton = document.querySelector('.minusButton');
-var plus2Button = document.querySelector('.plus2Button');
-var minus2Button = document.querySelector('.minus2Button');
-
 editButton.addEventListener('click', function() {
     window.location.href ='index.html';
 })
 
 wallButton.addEventListener('click', function() {
-currentWall += 1;
-const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
-const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
-const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
-const wall = new THREE.Mesh(geo, mat);
+  currentWall += 1;
+  const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
+  const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
+  const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
+  const wall = new THREE.Mesh(geo, mat);
 
-const wallClone = wall.clone();
-scene.add(wallClone);
+  const wallClone = wall.clone();
+  scene.add(wallClone);
 
-wallClone.scale.y = 2;
-wallClone.position.y = 1;
-wallClone.name = 'wall' + currentWall;
-wallClone.updateMatrix();
-objects.push(wallClone);
+  wallClone.scale.y = 2;
+  wallClone.position.y = 1;
+  wallClone.name = 'wall' + currentWall;
+  wallClone.updateMatrix();
+  objects.push(wallClone);
 })
 
 entranceButton.addEventListener('click', function() {
@@ -202,7 +199,7 @@ entranceNodeButton.addEventListener('click', function() {
             scene.add(entranceNodeClone);
             
             entranceNodeClone.position.y = 1;
-            entranceNodeClone.name = 'entranceNode' + " " +  currentEntranceNode;
+            entranceNodeClone.name = 'entranceNode' + currentEntranceNode;
             entranceNodeClone.updateMatrix();
             objects.push(entranceNodeClone);
 })
@@ -217,7 +214,7 @@ stairsNodeButton.addEventListener('click', function() {
                 scene.add(stairsNodeClone);
                 
                 stairsNodeClone.position.y = 1;
-                stairsNodeClone.name = 'stairsNode' + " " + currentStairsNode;
+                stairsNodeClone.name = 'stairsNode' + currentStairsNode;
                 stairsNodeClone.updateMatrix();
                 objects.push(stairsNodeClone);
 })
@@ -249,44 +246,88 @@ minus2Button.addEventListener('click', function() {
 })
 
 var empty = 0;
-//walls = xValue, yValue, zValue, rotation, thickness, length, name, id
-
 
 saveButton.addEventListener('click', function() {
-    const link = document.createElement("a");
-    const content = 'hello'
-    const file = new Blob([content], { type: 'text/plain' });
-    link.href = URL.createObjectURL(file);
-    link.download = "sample.txt";
-    link.click();
-    URL.revokeObjectURL(link.href);
-
-
-    /*
-    window.alert(objects.length)
-    for (let x = 0; x < objects.length;x++) {
-        if (objects[x].name.length == 5) {
-            while (tempwallPos[empty][0] != undefined) {
-                empty += 1;
-            }
-            tempwallPos[empty][0] = objects[x].position.x
-            tempwallPos[empty][1] = objects[x].position.y
-            tempwallPos[empty][2] = objects[x].position.z
-            tempwallPos[empty][3] = objects[x].rotation.y
-            tempwallPos[empty][4] = objects[x].scale.y
-            tempwallPos[empty][5] = objects[x].scale.z
-            tempwallPos[empty][6] = objects[x].name.substring(0, 4)
-            tempwallPos[empty][7] = objects[x].name.substring(4, 5)
-        } else {
-        
-        if (objects[x].name.length == 9) {
-            while (tempentrancePos[empty][0] == undefined) {
-                empty += 1;
-            }
+    //window.alert(objects.length)
+    var content = "" 
+    if (objects.length != 0) {
+    for (let x = 0; x < objects.length; x++) {
+        switch (objects[x].name.length) {
+            //walls
+            case 5:
+                content += objects[x].position.x + ','
+                content += objects[x].position.y + ','
+                content += objects[x].position.z + ','
+                content += objects[x].rotation.y + ','
+                content += objects[x].scale.y + ','
+                content += objects[x].scale.z + ','
+                content += objects[x].name.substring(0, 4) + ','
+                content += objects[x].name.substring(4, 5) + ','
+            break;
+            //entrance
+            case 9:
+                content += objects[x].position.x + ','
+                content += objects[x].position.y + ','
+                content += objects[x].position.z + ','
+                content += objects[x].rotation.y + ','
+                content += objects[x].scale.y + ','
+                content += objects[x].scale.z + ','
+                content += objects[x].name.substring(0, 8) + ','
+                content += objects[x].name.substring(8, 9) + ','
+            break;
+            //stairs
+            case 7:
+                content += objects[x].position.x + ','
+                content += objects[x].position.y + ','
+                content += objects[x].position.z + ','
+                content += objects[x].rotation.y + ','
+                content += objects[x].scale.y + ','
+                content += objects[x].scale.z + ','
+                content += objects[x].name.substring(0, 6) + ','
+                content += objects[x].name.substring(6, 7) + ','
+            break;
+            //hallway node
+            case 12:
+                content += objects[x].position.x + ','
+                content += objects[x].position.y + ','
+                content += objects[x].position.z + ','
+                content += objects[x].name.substring(0, 11) + ','
+                content += objects[x].name.substring(11, 12) + ','
+            break;
+            //stairs node
+            case 11:
+                content += objects[x].position.x + ','
+                content += objects[x].position.y + ','
+                content += objects[x].position.z + ','
+                content += objects[x].name.substring(0, 10) + ','
+                content += objects[x].name.substring(10, 11) + ','
+            break;
+            //entrance node
+            case 13:
+                content += objects[x].position.x + ','
+                content += objects[x].position.y + ','
+                content += objects[x].position.z + ','
+                content += objects[x].name.substring(0, 12) + ','
+                content += objects[x].name.substring(12, 13) + ','
+            break;
+            //room node0
+            case 10:
+                content += objects[x].position.x + ','
+                content += objects[x].position.y + ','
+                content += objects[x].position.z + ','
+                content += objects[x].name.substring(0, 9) + ','
+                content += objects[x].name.substring(9, 10) + ','
+            break;
         }
     }
-    }
-    */
+    window.alert(content)
+    const link = document.createElement("a");
+    const file = new Blob([content], { type: 'text/plain' });
+    link.href = URL.createObjectURL(file);
+    link.download = "3DBuilding.txt";
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
 })
 
 function animate() {
