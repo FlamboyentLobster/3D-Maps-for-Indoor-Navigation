@@ -7,6 +7,7 @@ import camera from './Camera';
 import renderer from './Renderer';
 import floors from './Floors';
 import objects from './Objects';
+THREE.Cache.enabled = true;
 
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -31,6 +32,11 @@ var currentStairsNode = -1;
 var currentHallwayNode = -1;
 var currentObject = new THREE.Object3D;
 var floorNo = 0;
+
+var loader = new THREE.FileLoader();
+loader.load( "src/3DBuilding.txt", function( text ) {
+  window.alert(text)
+} );
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -247,6 +253,16 @@ var empty = 0;
 
 
 saveButton.addEventListener('click', function() {
+    const link = document.createElement("a");
+    const content = 'hello'
+    const file = new Blob([content], { type: 'text/plain' });
+    link.href = URL.createObjectURL(file);
+    link.download = "sample.txt";
+    link.click();
+    URL.revokeObjectURL(link.href);
+
+
+    /*
     window.alert(objects.length)
     for (let x = 0; x < objects.length;x++) {
         if (objects[x].name.length == 5) {
@@ -270,6 +286,7 @@ saveButton.addEventListener('click', function() {
         }
     }
     }
+    */
 })
 
 function animate() {
