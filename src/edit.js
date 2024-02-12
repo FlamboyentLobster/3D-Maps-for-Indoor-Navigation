@@ -79,15 +79,49 @@ var minusButton = document.querySelector('.minusButton');
 var plus2Button = document.querySelector('.plus2Button');
 var minus2Button = document.querySelector('.minus2Button');
 
-// to do --------------------------------------------------------------------
 //walls = xValue, yValue, zValue, rotation, thickness, length, name, id
 //entrance = xValue, yValue, zValue, rotation, thickness, length, name, id
 //stairs = xValue, yValue, zValue, rotation, thickness, length, name, id
 //nodes = xValue, yValue, zValue, name, id
 
+// to do --------------------------------------------------------------------
+
 var loader = new THREE.FileLoader();
 loader.load( "src/3DBuilding.txt", function( text ) {
-  //window.alert(text)
+    if (text.length != 0) {
+        const array = text.split(",")
+        for (let x = 0; x < array.length - 1; x++) {
+            switch (array[x]) {
+                case "wall":
+                    currentWall += 1;
+
+                break;
+                case "entrance":
+                    currentEntrance += 1;
+
+                break;
+                case "stairs":
+
+                break;
+                case "hallwayNode":
+                    currentHallwayNode += 1;
+
+                break;
+                case "stairsNode":
+                    currentStairsNode += 1;
+
+                break;
+                case "entranceNode":
+                    currentEntranceNode += 1;
+
+                break;
+                case "roomNode":
+
+                break;
+            }
+        }
+    }
+  
 } );
 
 window.addEventListener('resize', onWindowResize);
@@ -126,7 +160,6 @@ function onMouseClick( event ) {
         } else {
             toggle = false
         }
-    
 }
 
 function onWindowResize() {
@@ -159,7 +192,7 @@ wallButton.addEventListener('click', function() {
 
 entranceButton.addEventListener('click', function() {
     currentEntrance += 1;
-    const entranceTex = new THREE.TextureLoader().load('../textures/wall2.jpg');
+    const entranceTex = new THREE.TextureLoader().load('../textures/door.png');
     const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
     const mat = new THREE.MeshBasicMaterial({map: entranceTex, color: 0xFFF8E7, side: THREE.DoubleSide});
     const entrance = new THREE.Mesh(geo, mat);
@@ -245,10 +278,7 @@ minus2Button.addEventListener('click', function() {
     }
 })
 
-var empty = 0;
-
 saveButton.addEventListener('click', function() {
-    //window.alert(objects.length)
     var content = "" 
     if (objects.length != 0) {
     for (let x = 0; x < objects.length; x++) {
