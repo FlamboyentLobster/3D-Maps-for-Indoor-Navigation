@@ -94,29 +94,96 @@ loader.load( "src/3DBuilding.txt", function( text ) {
             switch (array[x]) {
                 case "wall":
                     currentWall += 1;
-
+                    const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
+                    const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
+                    const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
+                    const wall = new THREE.Mesh(geo, mat);
+                  
+                    const wallClone = wall.clone();
+                    scene.add(wallClone);
+                    
+                    wallClone.position.x = array[x - 6];
+                    wallClone.position.y = array[x - 5];
+                    wallClone.position.z = array[x - 4];
+                    wallClone.rotation.y = array[x - 3];
+                    wallClone.scale.y = array[x - 2];
+                    wallClone.scale.z = array[x - 1];
+                    wallClone.name = array[x] + array[x + 1];
+                    wallClone.updateMatrix();
+                    objects.push(wallClone);
                 break;
                 case "entrance":
                     currentEntrance += 1;
-
+                    const entranceTex = new THREE.TextureLoader().load('../textures/door.png');
+                    const entrancegeo = new THREE.BoxGeometry(0.1, 1, 1, 5);
+                    const entrancemat = new THREE.MeshBasicMaterial({map: entranceTex, color: 0xFFF8E7, side: THREE.DoubleSide});
+                    const entrance = new THREE.Mesh(entrancegeo, entrancemat);
+    
+                    const entranceClone = entrance.clone();
+                    scene.add(entranceClone);
+    
+                    entranceClone.position.x = array[x - 6];
+                    entranceClone.position.y = array[x - 5];
+                    entranceClone.position.z = array[x - 4];
+                    entranceClone.rotation.y = array[x - 3];
+                    entranceClone.scale.y = array[x - 2];
+                    entranceClone.scale.z = array[x - 1];
+                    entranceClone.name = array[x] + array[x + 1];
+                    entranceClone.updateMatrix();
+                    objects.push(entranceClone);
                 break;
                 case "stairs":
 
                 break;
                 case "hallwayNode":
                     currentHallwayNode += 1;
-
+                    const hallwaygeo = new THREE.SphereGeometry(0.2);
+                    const hallwaymat = new THREE.MeshBasicMaterial({color: 0xff0000});
+                    const hallwayNode = new THREE.Mesh(hallwaygeo, hallwaymat);
+        
+                    const hallwayNodeClone = hallwayNode.clone();
+                    scene.add(hallwayNodeClone);
+        
+                    hallwayNodeClone.position.x = array[x - 3];
+                    hallwayNodeClone.position.y = array[x - 2];
+                    hallwayNodeClone.position.z = array[x - 1];
+                    hallwayNodeClone.name = array[x] + array[x + 1];
+                    hallwayNodeClone.updateMatrix();
+                    objects.push(hallwayNodeClone);
                 break;
                 case "stairsNode":
                     currentStairsNode += 1;
-
+                    const stairsNgeo = new THREE.SphereGeometry(0.2);
+                    const stairsNmat = new THREE.MeshBasicMaterial({color: 0x0000FF});
+                    const stairsNode = new THREE.Mesh(stairsNgeo, stairsNmat);
+        
+                    const stairsNodeClone = stairsNode.clone();
+                    scene.add(stairsNodeClone);
+                    
+                    stairsNodeClone.position.x = array[x - 3];
+                    stairsNodeClone.position.y = array[x - 2];
+                    stairsNodeClone.position.z = array[x - 1];
+                    stairsNodeClone.name = array[x] + array[x + 1];
+                    stairsNodeClone.updateMatrix();
+                    objects.push(stairsNodeClone);
                 break;
                 case "entranceNode":
                     currentEntranceNode += 1;
-
+                    const entranceNgeo = new THREE.SphereGeometry(0.2);
+                    const entranceNmat = new THREE.MeshBasicMaterial({color: 0x008000});
+                    const entranceNode = new THREE.Mesh(entranceNgeo, entranceNmat);
+                    
+                    const entranceNodeClone = entranceNode.clone();
+                    scene.add(entranceNodeClone);
+                    
+                    entranceNodeClone.position.x = array[x - 3];
+                    entranceNodeClone.position.y = array[x - 2];
+                    entranceNodeClone.position.z = array[x - 1];
+                    entranceNodeClone.name = array[x] + array[x + 1];
+                    entranceNodeClone.updateMatrix();
+                    objects.push(entranceNodeClone);
                 break;
                 case "roomNode":
-
                 break;
             }
         }
@@ -175,6 +242,7 @@ editButton.addEventListener('click', function() {
 
 wallButton.addEventListener('click', function() {
   currentWall += 1;
+  window.alert(currentWall)
   const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
   const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
   const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
