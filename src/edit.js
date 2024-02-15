@@ -16,17 +16,13 @@ var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 
 var toggle = false;
 
-var tempwallPos =  [[],[],[],[],[],[],[],[]];
-var tempentrancePos = [[],[]];
-var tempfloorsPos = [[],[]];
-var wallNo = 0;
 var currentWall = -1;
 var currentEntrance = -1;
 var currentEntranceNode = -1;
 var currentStairsNode = -1;
 var currentHallwayNode = -1;
+var currentRoomNode = -1;
 var currentObject = new THREE.Object3D;
-var floorNo = 0;
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -74,6 +70,7 @@ var stairsButton = document.querySelector('.stairsButton');
 var hallwayNodeButton = document.querySelector('.hallwayNodeButton');
 var stairsNodeButton = document.querySelector('.stairsNodeButton');
 var entranceNodeButton = document.querySelector('.entranceNodeButton');
+var roomNodeButton = document.querySelector('.roomNodeButton');
 var plusButton = document.querySelector('.plusButton');
 var minusButton = document.querySelector('.minusButton');
 var plus2Button = document.querySelector('.plus2Button');
@@ -102,12 +99,12 @@ loader.load( "src/3DBuilding.txt", function( text ) {
                     const wallClone = wall.clone();
                     scene.add(wallClone);
                     
-                    wallClone.position.x = array[x - 6];
-                    wallClone.position.y = array[x - 5];
-                    wallClone.position.z = array[x - 4];
-                    wallClone.rotation.y = array[x - 3];
-                    wallClone.scale.y = array[x - 2];
-                    wallClone.scale.z = array[x - 1];
+                    wallClone.position.x = Number(array[x - 6]);
+                    wallClone.position.y = Number(array[x - 5]);
+                    wallClone.position.z = Number(array[x - 4]);
+                    wallClone.rotation.y = Number(array[x - 3]);
+                    wallClone.scale.y = Number(array[x - 2]);
+                    wallClone.scale.z = Number(array[x - 1]);
                     wallClone.name = array[x] + array[x + 1];
                     wallClone.updateMatrix();
                     objects.push(wallClone);
@@ -122,12 +119,12 @@ loader.load( "src/3DBuilding.txt", function( text ) {
                     const entranceClone = entrance.clone();
                     scene.add(entranceClone);
     
-                    entranceClone.position.x = array[x - 6];
-                    entranceClone.position.y = array[x - 5];
-                    entranceClone.position.z = array[x - 4];
-                    entranceClone.rotation.y = array[x - 3];
-                    entranceClone.scale.y = array[x - 2];
-                    entranceClone.scale.z = array[x - 1];
+                    entranceClone.position.x = Number(array[x - 6]);
+                    entranceClone.position.y = Number(array[x - 5]);
+                    entranceClone.position.z = Number(array[x - 4]);
+                    entranceClone.rotation.y = Number(array[x - 3]);
+                    entranceClone.scale.y = Number(array[x - 2]);
+                    entranceClone.scale.z = Number(array[x - 1]);
                     entranceClone.name = array[x] + array[x + 1];
                     entranceClone.updateMatrix();
                     objects.push(entranceClone);
@@ -144,9 +141,9 @@ loader.load( "src/3DBuilding.txt", function( text ) {
                     const hallwayNodeClone = hallwayNode.clone();
                     scene.add(hallwayNodeClone);
         
-                    hallwayNodeClone.position.x = array[x - 3];
-                    hallwayNodeClone.position.y = array[x - 2];
-                    hallwayNodeClone.position.z = array[x - 1];
+                    hallwayNodeClone.position.x = Number(array[x - 3]);
+                    hallwayNodeClone.position.y = Number(array[x - 2]);
+                    hallwayNodeClone.position.z = Number(array[x - 1]);
                     hallwayNodeClone.name = array[x] + array[x + 1];
                     hallwayNodeClone.updateMatrix();
                     objects.push(hallwayNodeClone);
@@ -160,9 +157,9 @@ loader.load( "src/3DBuilding.txt", function( text ) {
                     const stairsNodeClone = stairsNode.clone();
                     scene.add(stairsNodeClone);
                     
-                    stairsNodeClone.position.x = array[x - 3];
-                    stairsNodeClone.position.y = array[x - 2];
-                    stairsNodeClone.position.z = array[x - 1];
+                    stairsNodeClone.position.x = Number(array[x - 3]);
+                    stairsNodeClone.position.y = Number(array[x - 2]);
+                    stairsNodeClone.position.z = Number(array[x - 1]);
                     stairsNodeClone.name = array[x] + array[x + 1];
                     stairsNodeClone.updateMatrix();
                     objects.push(stairsNodeClone);
@@ -176,14 +173,28 @@ loader.load( "src/3DBuilding.txt", function( text ) {
                     const entranceNodeClone = entranceNode.clone();
                     scene.add(entranceNodeClone);
                     
-                    entranceNodeClone.position.x = array[x - 3];
-                    entranceNodeClone.position.y = array[x - 2];
-                    entranceNodeClone.position.z = array[x - 1];
+                    entranceNodeClone.position.x = Number(array[x - 3]);
+                    entranceNodeClone.position.y = Number(array[x - 2]);
+                    entranceNodeClone.position.z = Number(array[x - 1]);
                     entranceNodeClone.name = array[x] + array[x + 1];
                     entranceNodeClone.updateMatrix();
                     objects.push(entranceNodeClone);
                 break;
                 case "roomNode":
+                    currentRoomNode += 1;
+                    const roomNgeo = new THREE.SphereGeometry(0.2);
+                    const roomNmat = new THREE.MeshBasicMaterial({color: 0xFFFF00});
+                    const roomNode = new THREE.Mesh(roomNgeo, roomNmat);
+                    
+                    const roomNodeClone = roomNode.clone();
+                    scene.add(entranceNodeClone);
+                    
+                    roomNodeClone.position.x = Number(array[x - 3]);
+                    roomNodeClone.position.y = Number(array[x - 2]);
+                    roomNodeClone.position.z = Number(array[x - 1]);
+                    roomNodeClone.name = array[x] + array[x + 1];
+                    roomNodeClone.updateMatrix();
+                    objects.push(roomNodeClone);
                 break;
             }
         }
@@ -242,7 +253,6 @@ editButton.addEventListener('click', function() {
 
 wallButton.addEventListener('click', function() {
   currentWall += 1;
-  window.alert(currentWall)
   const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
   const geo = new THREE.BoxGeometry(0.1, 1, 1, 5);
   const mat = new THREE.MeshBasicMaterial({map: wallTex, color: 0xFFF8E7, side: THREE.DoubleSide});
@@ -320,6 +330,21 @@ stairsNodeButton.addEventListener('click', function() {
                 objects.push(stairsNodeClone);
 })
 
+roomNodeButton.addEventListener('click', function() {
+    currentRoomNode += 1;
+    const geo = new THREE.SphereGeometry(0.2);
+    const mat = new THREE.MeshBasicMaterial({color: 0xFFFF00});
+    const roomNode = new THREE.Mesh(geo, mat);
+    
+    const roomNodeClone = roomNode.clone();
+    scene.add(roomNodeClone);
+    
+    roomNodeClone.position.y = 1;
+    roomNodeClone.name = 'roomNode' + currentRoomNode;
+    roomNodeClone.updateMatrix();
+    objects.push(roomNodeClone);
+})
+
 plusButton.addEventListener('click', function() {
     currentObject.scale.z += 0.25;
     lengthDiv.textContent = "Length:" + currentObject.scale.z
@@ -348,6 +373,7 @@ minus2Button.addEventListener('click', function() {
 
 saveButton.addEventListener('click', function() {
     var content = "" 
+    window.alert(objects.length)
     if (objects.length != 0) {
     for (let x = 0; x < objects.length; x++) {
         switch (objects[x].name.length) {
@@ -418,7 +444,6 @@ saveButton.addEventListener('click', function() {
             break;
         }
     }
-    window.alert(content)
     const link = document.createElement("a");
     const file = new Blob([content], { type: 'text/plain' });
     link.href = URL.createObjectURL(file);

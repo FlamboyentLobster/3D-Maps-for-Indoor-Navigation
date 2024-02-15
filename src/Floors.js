@@ -5,7 +5,7 @@ let floorPos = [
   [12.5, 9.5, 0, 5, 0],
 ];
 
-var floorNo = 2;
+var floorNo = 1;
 
 const tempFloor = new THREE.Object3D();
 const floorTexture = new THREE.TextureLoader().load('../textures/wall.png');

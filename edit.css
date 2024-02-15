@@ -308,4 +308,20 @@ canvas {
       cursor: pointer;
             border: solid 3px rgb(10, 2, 2);
     }
+
+    .roomNodeButton {
+      position: fixed;
+      right: 150px;
+      top: 680px;
+      width: 100px;
+      height: 100px;
+      background: none;
+      font-size: 27px;
+      border: none;
+    }
+    
+    .roomNodeButton:hover {
+      cursor: pointer;
+            border: solid 3px rgb(10, 2, 2);
+    }
     
