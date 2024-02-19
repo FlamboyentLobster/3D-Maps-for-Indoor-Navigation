@@ -372,79 +372,87 @@ minus2Button.addEventListener('click', function() {
 })
 
 saveButton.addEventListener('click', function() {
-    var content = "" 
-    window.alert(objects.length)
+    var y = 0;
+    var content = [];
     if (objects.length != 0) {
     for (let x = 0; x < objects.length; x++) {
         switch (objects[x].name.length) {
             //walls
             case 5:
-                content += objects[x].position.x + ','
-                content += objects[x].position.y + ','
-                content += objects[x].position.z + ','
-                content += objects[x].rotation.y + ','
-                content += objects[x].scale.y + ','
-                content += objects[x].scale.z + ','
-                content += objects[x].name.substring(0, 4) + ','
-                content += objects[x].name.substring(4, 5) + ','
+                content[y] = objects[x].position.x.toFixed(2) 
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].rotation.y.toFixed(2) 
+                content[y + 4] = objects[x].scale.y 
+                content[y + 5] = objects[x].scale.z 
+                content[y + 6] = objects[x].name.substring(0, 4) 
+                content[y + 7] = objects[x].name.substring(4, 5) 
+                y += 8
             break;
             //entrance
             case 9:
-                content += objects[x].position.x + ','
-                content += objects[x].position.y + ','
-                content += objects[x].position.z + ','
-                content += objects[x].rotation.y + ','
-                content += objects[x].scale.y + ','
-                content += objects[x].scale.z + ','
-                content += objects[x].name.substring(0, 8) + ','
-                content += objects[x].name.substring(8, 9) + ','
+                content[y] = objects[x].position.x.toFixed(2) 
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].rotation.y.toFixed(2) 
+                content[y + 4] = objects[x].scale.y 
+                content[y + 5] = objects[x].scale.z 
+                content[y + 6] = objects[x].name.substring(0, 8) 
+                content[y + 7] = objects[x].name.substring(8, 9) 
+                y += 8
             break;
             //stairs
             case 7:
-                content += objects[x].position.x + ','
-                content += objects[x].position.y + ','
-                content += objects[x].position.z + ','
-                content += objects[x].rotation.y + ','
-                content += objects[x].scale.y + ','
-                content += objects[x].scale.z + ','
-                content += objects[x].name.substring(0, 6) + ','
-                content += objects[x].name.substring(6, 7) + ','
+                content[y] = objects[x].position.x.toFixed(2) 
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].rotation.y.toFixed(2) 
+                content[y + 4] = objects[x].scale.y 
+                content[y + 5] = objects[x].scale.z 
+                content[y + 6] = objects[x].name.substring(0, 6) 
+                content[y + 7] = objects[x].name.substring(6, 7) 
+                y += 8
             break;
             //hallway node
             case 12:
-                content += objects[x].position.x + ','
-                content += objects[x].position.y + ','
-                content += objects[x].position.z + ','
-                content += objects[x].name.substring(0, 11) + ','
-                content += objects[x].name.substring(11, 12) + ','
+                content[y] = objects[x].position.x.toFixed(2)
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].name.substring(0, 11) 
+                content[y + 4] = objects[x].name.substring(11, 12) 
+                y += 5
             break;
             //stairs node
             case 11:
-                content += objects[x].position.x + ','
-                content += objects[x].position.y + ','
-                content += objects[x].position.z + ','
-                content += objects[x].name.substring(0, 10) + ','
-                content += objects[x].name.substring(10, 11) + ','
+                content[y] = objects[x].position.x.toFixed(2) 
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].name.substring(0, 10) 
+                content[y + 4] = objects[x].name.substring(10, 11) 
+                y += 5
             break;
             //entrance node
             case 13:
-                content += objects[x].position.x + ','
-                content += objects[x].position.y + ','
-                content += objects[x].position.z + ','
-                content += objects[x].name.substring(0, 12) + ','
-                content += objects[x].name.substring(12, 13) + ','
+                content[y] = objects[x].position.x.toFixed(2) 
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].name.substring(0, 12) 
+                content[y + 4] = objects[x].name.substring(12, 13) 
+                y += 5
             break;
             //room node0
             case 10:
-                content += objects[x].position.x + ','
-                content += objects[x].position.y + ','
-                content += objects[x].position.z + ','
-                content += objects[x].name.substring(0, 9) + ','
-                content += objects[x].name.substring(9, 10) + ','
+                content[y] = objects[x].position.x.toFixed(2)
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].name.substring(0, 9) 
+                content[y + 4] = objects[x].name.substring(9, 10) 
+                y += 5
             break;
         }
     }
     const link = document.createElement("a");
+    window.alert(content);
     const file = new Blob([content], { type: 'text/plain' });
     link.href = URL.createObjectURL(file);
     link.download = "3DBuilding.txt";
