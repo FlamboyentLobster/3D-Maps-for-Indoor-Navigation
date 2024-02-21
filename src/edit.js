@@ -251,6 +251,15 @@ editButton.addEventListener('click', function() {
     window.location.href ='index.html';
 })
 
+function zeroPad(num,count)
+{
+  var numZeropad = num + '';
+  while(numZeropad.length < count) {
+    numZeropad = "0" + numZeropad;
+  }
+  return numZeropad;
+}
+
 wallButton.addEventListener('click', function() {
   currentWall += 1;
   const wallTex = new THREE.TextureLoader().load('../textures/wall.png');
@@ -263,7 +272,7 @@ wallButton.addEventListener('click', function() {
 
   wallClone.scale.y = 2;
   wallClone.position.y = 1;
-  wallClone.name = 'wall' + currentWall;
+  wallClone.name = 'wall' + zeroPad(currentWall, 3);
   wallClone.updateMatrix();
   objects.push(wallClone);
 })
@@ -280,7 +289,7 @@ entranceButton.addEventListener('click', function() {
     
     entranceClone.scale.y = 2;
     entranceClone.position.y = 1;
-    entranceClone.name = 'entrance' + currentEntrance;
+    entranceClone.name = 'entrance' + zeroPad(currentEntrance,3);
     entranceClone.updateMatrix();
     objects.push(entranceClone);
 })
@@ -295,7 +304,7 @@ hallwayNodeButton.addEventListener('click', function() {
         scene.add(hallwayNodeClone);
         
         hallwayNodeClone.position.y = 1;
-        hallwayNodeClone.name = 'hallwayNode' + currentHallwayNode;
+        hallwayNodeClone.name = 'hallwayNode' + zeroPad(currentHallwayNode,3);
         hallwayNodeClone.updateMatrix();
         objects.push(hallwayNodeClone);
 })
@@ -310,7 +319,7 @@ entranceNodeButton.addEventListener('click', function() {
             scene.add(entranceNodeClone);
             
             entranceNodeClone.position.y = 1;
-            entranceNodeClone.name = 'entranceNode' + currentEntranceNode;
+            entranceNodeClone.name = 'entranceNode' + zeroPad(currentEntranceNode, 3);
             entranceNodeClone.updateMatrix();
             objects.push(entranceNodeClone);
 })
@@ -325,7 +334,7 @@ stairsNodeButton.addEventListener('click', function() {
                 scene.add(stairsNodeClone);
                 
                 stairsNodeClone.position.y = 1;
-                stairsNodeClone.name = 'stairsNode' + currentStairsNode;
+                stairsNodeClone.name = 'stairsNode' + zeroPad(currentStairsNode, 3);
                 stairsNodeClone.updateMatrix();
                 objects.push(stairsNodeClone);
 })
@@ -340,7 +349,7 @@ roomNodeButton.addEventListener('click', function() {
     scene.add(roomNodeClone);
     
     roomNodeClone.position.y = 1;
-    roomNodeClone.name = 'roomNode' + currentRoomNode;
+    roomNodeClone.name = 'roomNode' + zeroPad(currentRoomNode, 3);
     roomNodeClone.updateMatrix();
     objects.push(roomNodeClone);
 })
@@ -378,30 +387,6 @@ saveButton.addEventListener('click', function() {
     for (let x = 0; x < objects.length; x++) {
         switch (objects[x].name.length) {
             //walls
-            case 5:
-                content[y] = objects[x].position.x.toFixed(2) 
-                content[y + 1] = objects[x].position.y.toFixed(2) 
-                content[y + 2] = objects[x].position.z.toFixed(2) 
-                content[y + 3] = objects[x].rotation.y.toFixed(2) 
-                content[y + 4] = objects[x].scale.y 
-                content[y + 5] = objects[x].scale.z 
-                content[y + 6] = objects[x].name.substring(0, 4) 
-                content[y + 7] = objects[x].name.substring(4, 5) 
-                y += 8
-            break;
-            //entrance
-            case 9:
-                content[y] = objects[x].position.x.toFixed(2) 
-                content[y + 1] = objects[x].position.y.toFixed(2) 
-                content[y + 2] = objects[x].position.z.toFixed(2) 
-                content[y + 3] = objects[x].rotation.y.toFixed(2) 
-                content[y + 4] = objects[x].scale.y 
-                content[y + 5] = objects[x].scale.z 
-                content[y + 6] = objects[x].name.substring(0, 8) 
-                content[y + 7] = objects[x].name.substring(8, 9) 
-                y += 8
-            break;
-            //stairs
             case 7:
                 content[y] = objects[x].position.x.toFixed(2) 
                 content[y + 1] = objects[x].position.y.toFixed(2) 
@@ -409,55 +394,81 @@ saveButton.addEventListener('click', function() {
                 content[y + 3] = objects[x].rotation.y.toFixed(2) 
                 content[y + 4] = objects[x].scale.y 
                 content[y + 5] = objects[x].scale.z 
-                content[y + 6] = objects[x].name.substring(0, 6) 
-                content[y + 7] = objects[x].name.substring(6, 7) 
+                content[y + 6] = objects[x].name.substring(0, 4) 
+                content[y + 7] = objects[x].name.substring(4, 7) 
                 y += 8
             break;
-            //hallway node
-            case 12:
-                content[y] = objects[x].position.x.toFixed(2)
-                content[y + 1] = objects[x].position.y.toFixed(2) 
-                content[y + 2] = objects[x].position.z.toFixed(2) 
-                content[y + 3] = objects[x].name.substring(0, 11) 
-                content[y + 4] = objects[x].name.substring(11, 12) 
-                y += 5
-            break;
-            //stairs node
+            //entrance
             case 11:
                 content[y] = objects[x].position.x.toFixed(2) 
                 content[y + 1] = objects[x].position.y.toFixed(2) 
                 content[y + 2] = objects[x].position.z.toFixed(2) 
-                content[y + 3] = objects[x].name.substring(0, 10) 
-                content[y + 4] = objects[x].name.substring(10, 11) 
+                content[y + 3] = objects[x].rotation.y.toFixed(2) 
+                content[y + 4] = objects[x].scale.y 
+                content[y + 5] = objects[x].scale.z 
+                content[y + 6] = objects[x].name.substring(0, 8) 
+                content[y + 7] = objects[x].name.substring(8, 11) 
+                y += 8
+            break;
+            //stairs
+            case 9:
+                content[y] = objects[x].position.x.toFixed(2) 
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].rotation.y.toFixed(2) 
+                content[y + 4] = objects[x].scale.y 
+                content[y + 5] = objects[x].scale.z 
+                content[y + 6] = objects[x].name.substring(0, 6) 
+                content[y + 7] = objects[x].name.substring(6, 9) 
+                y += 8
+            break;
+            //hallway node
+            case 14:
+                content[y] = objects[x].position.x.toFixed(2)
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].name.substring(0, 11) 
+                content[y + 4] = objects[x].name.substring(11, 14) 
                 y += 5
             break;
-            //entrance node
+            //stairs node
             case 13:
                 content[y] = objects[x].position.x.toFixed(2) 
                 content[y + 1] = objects[x].position.y.toFixed(2) 
                 content[y + 2] = objects[x].position.z.toFixed(2) 
+                content[y + 3] = objects[x].name.substring(0, 10) 
+                content[y + 4] = objects[x].name.substring(10, 13) 
+                y += 5
+            break;
+            //entrance node
+            case 15:
+                content[y] = objects[x].position.x.toFixed(2) 
+                content[y + 1] = objects[x].position.y.toFixed(2) 
+                content[y + 2] = objects[x].position.z.toFixed(2) 
                 content[y + 3] = objects[x].name.substring(0, 12) 
-                content[y + 4] = objects[x].name.substring(12, 13) 
+                content[y + 4] = objects[x].name.substring(12, 15) 
                 y += 5
             break;
             //room node0
-            case 10:
+            case 12:
                 content[y] = objects[x].position.x.toFixed(2)
                 content[y + 1] = objects[x].position.y.toFixed(2) 
                 content[y + 2] = objects[x].position.z.toFixed(2) 
                 content[y + 3] = objects[x].name.substring(0, 9) 
-                content[y + 4] = objects[x].name.substring(9, 10) 
+                content[y + 4] = objects[x].name.substring(9, 12) 
                 y += 5
             break;
         }
     }
     const link = document.createElement("a");
     window.alert(content);
-    const file = new Blob([content], { type: 'text/plain' });
+    const file = new Blob([content], { type: 'text/plain;encoding:utf16le' });
     link.href = URL.createObjectURL(file);
     link.download = "3DBuilding.txt";
     link.click();
     URL.revokeObjectURL(link.href);
+
+
 }
 })
 
