@@ -270,8 +270,29 @@ rightButton.addEventListener('click', function() {
 })
 
 leftButton.addEventListener('click', function() {
-    controls.target.set(0.5, 1, -7)
-    controls.update();
+    o -= 1
+    if (o > 0) {
+        for (let x = 0; x < textFile.length - 1; x++) {
+            if (entrances[o] == textFile[x] + textFile[x + 1]) {
+                controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
+                camera.position.setZ(0);
+                controls.update();
+            }
+        }
+    } else if (o < 0) {
+        o = limito - 1
+        for (let x = 0; x < textFile.length - 1; x++) {
+            if (entrances[o] == textFile[x] + textFile[x + 1]) {
+                controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
+                camera.position.setZ(0);
+                controls.update();
+            }
+        }
+    } else if (o == 0) {
+        controls.target.set(0, 0, 0);
+        camera.position.setZ(20);
+        controls.update();
+    }
 })
 
 right2Button.addEventListener('click', function() {
@@ -294,7 +315,29 @@ right2Button.addEventListener('click', function() {
 })
 
 left2Button.addEventListener('click', function() {
-    
+    p -= 1
+    if (p > 0) {
+        for (let x = 0; x < textFile.length - 1; x++) {
+            if (rooms[p] == textFile[x] + textFile[x + 1]) {
+                controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
+                camera.position.setZ(0);
+                controls.update();
+            }
+        }
+    } else if (p < 0) {
+        p = limitp - 1
+        for (let x = 0; x < textFile.length - 1; x++) {
+            if (rooms[p] == textFile[x] + textFile[x + 1]) {
+                controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
+                camera.position.setZ(0);
+                controls.update();
+            }
+        }
+    } else if (p == 0) {
+        controls.target.set(0, 0, 0);
+        camera.position.setZ(20);
+        controls.update();
+    }
 })
 
 goButton.addEventListener('click', function() {
