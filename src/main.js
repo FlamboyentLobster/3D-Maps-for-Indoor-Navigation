@@ -88,13 +88,122 @@ loader.load( "src/3DBuilding.txt", function( text ) {
 } );
 
 let graph = {
-	start: { A: 5, B: 2 },
-	A: { start: 1, C: 4, D: 2 },
-	B: { A: 8, D: 7 },
-	C: { D: 6, finish: 3 },
-	D: { finish: 1 },
-	finish: {},
+	entranceNode000: { hallwayNode000: 1.5 },
+    entranceNode001: { hallwayNode009: 1.5 },
+	hallwayNode000: { entranceNode000: 1.5, roomNode0007: 1.5, hallwayNode001: 2 },
+    hallwayNode001: { hallwayNode000: 1.5, hallwayNode004: 3, hallwayNode006: 3 },
+    hallwayNode002: { hallwayNode006: 2, hallwayNode003: 1, roomNode0008: 1.5 },
+    hallwayNode003: { hallwayNode002: 1, roomNode0009: 1.5 },
+    hallwayNode004: { hallwayNode001: 3, hallwayNode005: 2, roomNode0000: 1.5 },
+    hallwayNode005: { hallwayNode004: 2, roomNode0005: 1.5, roomNode0006: 1 },
+    hallwayNode006: { hallwayNode001: 1, hallwayNode002: 2, hallwayNode007: 2 },
+    hallwayNode007: { hallwayNode006: 2, hallwayNode008: 3, hallwayNode010: 2 },
+    hallwayNode008: { hallwayNode007: 3, hallwayNode009: 2, roomNode0001: 1.5 },
+    hallwayNode009: { hallwayNode008: 2, roomNode0002: 1.5, entranceNode001: 1.5 },
+    hallwayNode010: { hallwayNode007: 2, hallwayNode013: 2, hallwayNode011: 3 },
+    hallwayNode011: { hallwayNode010: 3, hallwayNode012: 3, roomNode0003: 1.5 },
+    hallwayNode012: { hallwayNode011: 3, roomNode0004: 1.5 },
+    hallwayNode013: { hallwayNode010: 2 },
+    roomNode0000: { hallwayNode004: 1.5 },
+    roomNode0001: { hallwayNode008: 1  },
+    roomNode0002: { hallwayNode009: 1.5 },
+    roomNode0003: { hallwayNode011: 1.5 },
+    roomNode0004: { hallwayNode012: 1.5 },
+    roomNode0005: { hallwayNode005: 1.5  },
+    roomNode0006: { hallwayNode005: 1  },
+    roomNode0007: { hallwayNode000: 1.5  },
+    roomNode0008: { hallwayNode002: 1.5 },
+    roomNode0009: { hallwayNode003: 1.5  },
 };
+
+let shortestDistanceNode = (distances, visited) => {
+    // create a default value for shortest
+      let shortest = null;
+      
+        // for each node in the distances object
+      for (let node in distances) {
+          // if no node has been assigned to shortest yet
+            // or if the current node's distance is smaller than the current shortest
+          let currentIsShortest =
+              shortest === null || distances[node] < distances[shortest];
+              
+            // and if the current node is in the unvisited set
+          if (currentIsShortest && !visited.includes(node)) {
+              // update shortest to be the current node
+              shortest = node;
+          }
+      }
+      return shortest;
+  };
+
+let findShortestPath = (graph, startNode, endNode) => {
+ 
+    // track distances from the start node using a hash object
+      let distances = {};
+    distances[endNode] = "Infinity";
+    distances = Object.assign(distances, graph[startNode]);
+   // track paths using a hash object
+    let parents = { endNode: null };
+    for (let child in graph[startNode]) {
+     parents[child] = startNode;
+    }
+     
+    // collect visited nodes
+      let visited = [];
+   // find the nearest node
+      let node = shortestDistanceNode(distances, visited);
+    
+    // for that node:
+    while (node) {
+    // find its distance from the start node & its child nodes
+     let distance = distances[node];
+     let children = graph[node]; 
+         
+    // for each of those child nodes:
+         for (let child in children) {
+     
+     // make sure each child node is not the start node
+           if (String(child) === String(startNode)) {
+             continue;
+          } else {
+             // save the distance from the start node to the child node
+             let newdistance = distance + children[child];
+   // if there's no recorded distance from the start node to the child node in the distances object
+   // or if the recorded distance is shorter than the previously stored distance from the start node to the child node
+             if (!distances[child] || distances[child] > newdistance) {
+   // save the distance to the object
+        distances[child] = newdistance;
+   // record the path
+        parents[child] = node;
+       } 
+            }
+          }  
+         // move the current node to the visited set
+         visited.push(node);
+   // move to the nearest neighbor node
+         node = shortestDistanceNode(distances, visited);
+       }
+     
+    // using the stored paths from start node to end node
+    // record the shortest path
+    let shortestPath = [endNode];
+    let parent = parents[endNode];
+    while (parent) {
+     shortestPath.push(parent);
+     parent = parents[parent];
+    }
+    shortestPath.reverse();
+     
+    //this is the shortest path
+    let results = {
+     distance: distances[endNode],
+     path: shortestPath,
+    };
+    // return the shortest path & the end node's distance from the start node
+      return results;
+   };
+
+   console.log(findShortestPath(graph, "entranceNode000", "roomNode0001" ));
 
 const gridHelper = new THREE.GridHelper(20, 20);
 //scene.add(floors);

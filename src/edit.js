@@ -55,6 +55,12 @@ const zLabel = new CSS2DObject(zDiv);
 scene.add(zLabel)
 zLabel.position.set(1000, 1000, 1000) 
 
+const nameDiv = document.createElement("div");
+nameDiv.textContent = "Name:"
+const nameLabel = new CSS2DObject(nameDiv);
+scene.add(nameLabel)
+nameLabel.position.set(1000, 1000, 1000) 
+
 const gridHelper = new THREE.GridHelper(20, 20);
 scene.add(gridHelper);
 
@@ -215,14 +221,16 @@ function onMouseMove( event ) {
 
     if (toggle == true) {
         currentObject.position.set(Math.round(intersects.x * 4) / 4.0, intersects.y + 1, Math.round(intersects.z * 4) / 4.0)
-        lengthLabel.position.set(intersects.x, intersects.y + 1.4, intersects.z) 
+        lengthLabel.position.set(intersects.x, intersects.y + 1.1, intersects.z) 
         lengthDiv.textContent = "Length:" + currentObject.scale.z
-        rotationLabel.position.set(intersects.x, intersects.y + 1, intersects.z) 
+        rotationLabel.position.set(intersects.x, intersects.y + 0.8, intersects.z) 
         rotationDiv.textContent = "Rotation:" + currentObject.rotation.y.toFixed(2)
-        xLabel.position.set(intersects.x, intersects.y + 0.6, intersects.z) 
+        xLabel.position.set(intersects.x, intersects.y + 0.5, intersects.z) 
         xDiv.textContent = "X:" + intersects.x.toFixed(2)
         zLabel.position.set(intersects.x, intersects.y + 0.2, intersects.z) 
         zDiv.textContent = "Z:" +  intersects.z.toFixed(2)
+        nameLabel.position.set(intersects.x, intersects.y + 1.4, intersects.z)
+        nameDiv.textContent = "Name:" + currentObject.name
     }  
 }
 
