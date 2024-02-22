@@ -86,6 +86,7 @@ var minus2Button = document.querySelector('.minus2Button');
 var loader = new THREE.FileLoader();
 loader.load( "src/3DBuilding.txt", function( text ) {
     if (text.length != 0) {
+        window.alert(text)
         const array = text.split(",")
         for (let x = 0; x < array.length - 1; x++) {
             switch (array[x]) {
@@ -214,7 +215,7 @@ function onMouseMove( event ) {
     raycaster.ray.intersectPlane(plane, intersects)
 
     if (toggle == true) {
-        currentObject.position.set(intersects.x, intersects.y + 1, intersects.z)
+        currentObject.position.set(Math.round(intersects.x * 4) / 4.0, intersects.y + 1, Math.round(intersects.z * 4) / 4.0)
         lengthLabel.position.set(intersects.x, intersects.y + 1.4, intersects.z) 
         lengthDiv.textContent = "Length:" + currentObject.scale.z
         rotationLabel.position.set(intersects.x, intersects.y + 1, intersects.z) 
@@ -349,7 +350,7 @@ roomNodeButton.addEventListener('click', function() {
     scene.add(roomNodeClone);
     
     roomNodeClone.position.y = 1;
-    roomNodeClone.name = 'roomNode' + zeroPad(currentRoomNode, 3);
+    roomNodeClone.name = 'roomNode0' + zeroPad(currentRoomNode, 3);
     roomNodeClone.updateMatrix();
     objects.push(roomNodeClone);
 })
@@ -461,14 +462,11 @@ saveButton.addEventListener('click', function() {
         }
     }
     const link = document.createElement("a");
-    window.alert(content);
     const file = new Blob([content], { type: 'text/plain;encoding:utf16le' });
     link.href = URL.createObjectURL(file);
     link.download = "3DBuilding.txt";
     link.click();
     URL.revokeObjectURL(link.href);
-
-
 }
 })
 

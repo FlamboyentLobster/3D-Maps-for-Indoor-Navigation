@@ -65,7 +65,7 @@ loader.load( "src/3DBuilding.txt", function( text ) {
 } );
 
 const gridHelper = new THREE.GridHelper(20, 20);
-scene.add(floors);
+//scene.add(floors);
 scene.add(gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
