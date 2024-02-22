@@ -86,7 +86,6 @@ var minus2Button = document.querySelector('.minus2Button');
 var loader = new THREE.FileLoader();
 loader.load( "src/3DBuilding.txt", function( text ) {
     if (text.length != 0) {
-        window.alert(text)
         const array = text.split(",")
         for (let x = 0; x < array.length - 1; x++) {
             switch (array[x]) {
@@ -181,14 +180,14 @@ loader.load( "src/3DBuilding.txt", function( text ) {
                     entranceNodeClone.updateMatrix();
                     objects.push(entranceNodeClone);
                 break;
-                case "roomNode":
+                case "roomNode0":
                     currentRoomNode += 1;
                     const roomNgeo = new THREE.SphereGeometry(0.2);
                     const roomNmat = new THREE.MeshBasicMaterial({color: 0xFFFF00});
                     const roomNode = new THREE.Mesh(roomNgeo, roomNmat);
                     
                     const roomNodeClone = roomNode.clone();
-                    scene.add(entranceNodeClone);
+                    scene.add(roomNodeClone);
                     
                     roomNodeClone.position.x = Number(array[x - 3]);
                     roomNodeClone.position.y = Number(array[x - 2]);
