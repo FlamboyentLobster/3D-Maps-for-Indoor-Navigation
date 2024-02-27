@@ -5,7 +5,6 @@ import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRend
 import scene from './Scene';
 import camera from './Camera';
 import renderer from './Renderer';
-import floors from './Floors';
 import objects from './Objects';
 THREE.Cache.enabled = true;
 
@@ -86,8 +85,6 @@ var minus2Button = document.querySelector('.minus2Button');
 //entrance = xValue, yValue, zValue, rotation, thickness, length, name, id
 //stairs = xValue, yValue, zValue, rotation, thickness, length, name, id
 //nodes = xValue, yValue, zValue, name, id
-
-// to do --------------------------------------------------------------------
 
 var loader = new THREE.FileLoader();
 loader.load( "src/3DBuilding.txt", function( text ) {

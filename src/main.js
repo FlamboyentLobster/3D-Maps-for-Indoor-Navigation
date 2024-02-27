@@ -1,11 +1,9 @@
 import '../style.css'
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer';
 import scene from './Scene';
 import camera from './Camera';
 import renderer from './Renderer';
-import floors from './Floors';
 import objects from './Objects';
 THREE.Cache.enabled = true;
 
@@ -17,7 +15,8 @@ var o = 1;
 var limito = 0;
 var p = 1;
 var limitp = 0;
-var currentObject = new THREE.Object3D;
+var currentRoom = "";
+var currentEntrance = "";
 var textFile = [];
 
 var loader = new THREE.FileLoader();
@@ -203,10 +202,7 @@ let findShortestPath = (graph, startNode, endNode) => {
       return results;
    };
 
-   console.log(findShortestPath(graph, "entranceNode000", "roomNode0001" ));
-
 const gridHelper = new THREE.GridHelper(20, 20);
-//scene.add(floors);
 scene.add(gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -258,11 +254,13 @@ rightButton.addEventListener('click', function() {
                 controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
                 camera.position.setZ(0);
                 controls.update();
+                currentEntrance = entrances[o];
             }
         }
     
     } else if (o >= limito) {
         o = 0
+        currentEntrance = "";
         controls.target.set(0, 0, 0);
         camera.position.setZ(20);
         controls.update();
@@ -277,6 +275,7 @@ leftButton.addEventListener('click', function() {
                 controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
                 camera.position.setZ(0);
                 controls.update();
+                currentEntrance = entrances[o];
             }
         }
     } else if (o < 0) {
@@ -286,12 +285,14 @@ leftButton.addEventListener('click', function() {
                 controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
                 camera.position.setZ(0);
                 controls.update();
+                currentEntrance = entrances[o];
             }
         }
     } else if (o == 0) {
         controls.target.set(0, 0, 0);
         camera.position.setZ(20);
         controls.update();
+        currentEntrance = "";
     }
 })
 
@@ -303,6 +304,7 @@ right2Button.addEventListener('click', function() {
             controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
             camera.position.setZ(0);
             controls.update();
+            currentRoom = rooms[p];
         }
     }
 } else if (p >= limitp) {
@@ -310,6 +312,7 @@ right2Button.addEventListener('click', function() {
     controls.target.set(0, 0, 0);
     camera.position.setZ(20);
     controls.update();
+    currentRoom = "";
 }
 
 })
@@ -322,6 +325,7 @@ left2Button.addEventListener('click', function() {
                 controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
                 camera.position.setZ(0);
                 controls.update();
+                currentRoom = rooms[p];
             }
         }
     } else if (p < 0) {
@@ -331,17 +335,29 @@ left2Button.addEventListener('click', function() {
                 controls.target.set(Number(textFile[x - 3]), Number(textFile[x - 2]), Number(textFile[x - 1]));
                 camera.position.setZ(0);
                 controls.update();
+                currentRoom = rooms[p];
             }
         }
     } else if (p == 0) {
         controls.target.set(0, 0, 0);
         camera.position.setZ(20);
         controls.update();
+        currentRoom = "";
     }
 })
 
+// to do -----------------------------------------------------------------------------------------
+
 goButton.addEventListener('click', function() {
-    
+    if (currentEntrance == "") {
+        window.alert("Entrance not selected")
+    } else {
+        if (currentRoom == "") {
+            window.alert("Room not selected")
+        } else {
+            console.log(findShortestPath(graph, currentEntrance, currentRoom));
+        }
+    }
 })
 
 function animate() {
