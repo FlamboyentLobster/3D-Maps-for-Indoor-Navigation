@@ -360,6 +360,21 @@ goButton.addEventListener('click', function() {
     }
 })
 
+const linematerial = new THREE.LineBasicMaterial( { color: 0xff0000} );
+const points = [];
+points.push( new THREE.Vector3( - 10, 0, 0 ) );
+points.push( new THREE.Vector3( 0, 10, 0 ) );
+points.push( new THREE.Vector3( 10, 0, 0 ) );
+const linegeometry = new THREE.TubeGeometry(
+    new THREE.CatmullRomCurve3(points),
+    200,// path segments
+    0.1,// THICKNESS
+    12, //Roundness of Tube
+    false //closed
+  );
+const line = new THREE.Line( linegeometry, linematerial );
+scene.add( line );
+
 function animate() {
  requestAnimationFrame(animate);
  controls.update();
