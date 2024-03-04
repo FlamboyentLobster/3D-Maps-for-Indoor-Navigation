@@ -199,7 +199,7 @@ let findShortestPath = (graph, startNode, endNode) => {
      path: shortestPath,
     };
     // return the shortest path & the end node's distance from the start node
-      return results;
+      return shortestPath;
    };
 
 const gridHelper = new THREE.GridHelper(20, 20);
@@ -355,25 +355,34 @@ goButton.addEventListener('click', function() {
         if (currentRoom == "") {
             window.alert("Room not selected")
         } else {
-            console.log(findShortestPath(graph, currentEntrance, currentRoom));
+            var path = findShortestPath(graph, currentEntrance, currentRoom)
+            var pathArray = String(path).split(",")
+            const linematerial = new THREE.LineBasicMaterial( { color: 0xff0000} );
+            const points = [];
+            for (let x = 0; x < pathArray.length; x++) {
+                for (let y = 0; y < textFile.length; y++ ) {
+                    if (pathArray[x] == textFile[y] + textFile[y + 1]) {
+                     points.push( new THREE.Vector3(Number(textFile[y - 3]),Number(textFile[y - 2]) ,Number(textFile[y - 1]) ) );
+                    }
+               }
+            }
+            const linegeometry = new THREE.TubeGeometry(
+              new THREE.CatmullRomCurve3(points),
+              500,// path segments
+              0.1,// THICKNESS
+              35, //Roundness of Tube
+              false //closed
+            );
+            const line = new THREE.Line( linegeometry, linematerial );
+            scene.add( line );
+            controls.target.set(0, 0, 0);
+        camera.position.setZ(20);
+        controls.update();
+        currentRoom = "";
+
         }
     }
 })
-
-const linematerial = new THREE.LineBasicMaterial( { color: 0xff0000} );
-const points = [];
-points.push( new THREE.Vector3( - 10, 0, 0 ) );
-points.push( new THREE.Vector3( 0, 10, 0 ) );
-points.push( new THREE.Vector3( 10, 0, 0 ) );
-const linegeometry = new THREE.TubeGeometry(
-    new THREE.CatmullRomCurve3(points),
-    200,// path segments
-    0.1,// THICKNESS
-    12, //Roundness of Tube
-    false //closed
-  );
-const line = new THREE.Line( linegeometry, linematerial );
-scene.add( line );
 
 function animate() {
  requestAnimationFrame(animate);
