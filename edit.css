@@ -35,6 +35,16 @@ canvas {
       font-size: 22px;
       top: 240px;
     }
+
+    h4 {
+      color: #000000;
+      position: fixed;
+      font-family: elevon, sans-serif;
+      font-style: normal;
+      left: 400px;
+      font-size: 22px;
+      bottom: 56px;
+    }
     
       header {
         text-align: center;

@@ -243,6 +243,8 @@ switchBox.addEventListener('change', function() {
   } 
   else {
     toggled = false;
+    raiseButton.disabled = true;
+    lowerButton.disabled = true;
   }
 })
 
@@ -368,10 +370,10 @@ goButton.addEventListener('click', function() {
             }
             const linegeometry = new THREE.TubeGeometry(
               new THREE.CatmullRomCurve3(points),
-              500,// path segments
+              50,// path segments
               0.1,// THICKNESS
               35, //Roundness of Tube
-              false //closed
+              false, // closed
             );
             const line = new THREE.Line( linegeometry, linematerial );
             scene.add( line );
