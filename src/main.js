@@ -222,13 +222,23 @@ var right2Button = document.querySelector('.right2Button');
 var left2Button = document.querySelector('.left2Button');
 var goButton = document.querySelector('.goButton');
 var toggled = false;
+var currentFloor = 1;
 		
 raiseButton.addEventListener('click', function() {
-
+    currentFloor += 5
+    controls.target.set(0, currentFloor, 0)
+    camera.position.y += 5
+    controls.update();
 })
 
 lowerButton.addEventListener('click', function() {
-
+    if (currentFloor <= 1) {
+    } else {
+        currentFloor -= 5
+        controls.target.set(0, currentFloor, 0)
+        camera.position.y -= 5
+        controls.update();
+    }
 })
 
 editButton.addEventListener('click', function() {

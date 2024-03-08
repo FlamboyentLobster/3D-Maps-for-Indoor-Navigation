@@ -80,6 +80,8 @@ var plusButton = document.querySelector('.plusButton');
 var minusButton = document.querySelector('.minusButton');
 var plus2Button = document.querySelector('.plus2Button');
 var minus2Button = document.querySelector('.minus2Button');
+var addfloorButton = document.querySelector('.addhigherlevelButton');
+var minusfloorButton = document.querySelector('.addlowerlevelButton');
 
 //walls = xValue, yValue, zValue, rotation, thickness, length, name, id
 //entrance = xValue, yValue, zValue, rotation, thickness, length, name, id
@@ -382,6 +384,27 @@ minus2Button.addEventListener('click', function() {
     if (currentObject.rotation.y > 0.1) {
     currentObject.rotation.y -= Math.PI / 12;
     rotationDiv.textContent = "Rotation:" + currentObject.rotation.y.toFixed(2)
+    }
+})
+
+var currentFloor = 1;
+
+addfloorButton.addEventListener('click', function() {
+    currentFloor += 5
+    controls.target.set(0, currentFloor, 0)
+    camera.position.y += 5
+    gridHelper.position.y += 5
+    controls.update();
+})
+
+minusfloorButton.addEventListener('click', function() {
+    if (currentFloor <= 1) {
+    } else {
+        currentFloor -= 5
+        controls.target.set(0, currentFloor, 0)
+        camera.position.y -= 5
+        gridHelper.position.y -= 5
+        controls.update();
     }
 })
 
