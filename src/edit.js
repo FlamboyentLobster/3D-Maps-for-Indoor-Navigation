@@ -11,7 +11,7 @@ THREE.Cache.enabled = true;
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 var intersects = new THREE.Vector3();
-var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -5);
+var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
 const helper = new THREE.PlaneHelper( plane, 20, 0xffff00 );
 scene.add( helper );
 
@@ -395,7 +395,7 @@ addfloorButton.addEventListener('click', function() {
     controls.target.set(0, currentFloor, 0)
     camera.position.y += 5
     gridHelper.position.y += 5
-    //plane.set(new THREE.Vector3(0, currentFloor, 0), 0)
+    plane.set(new THREE.Vector3(0, 1, 0), -currentFloor + 1)
     controls.update();
 })
 
@@ -406,7 +406,7 @@ minusfloorButton.addEventListener('click', function() {
         controls.target.set(0, currentFloor, 0)
         camera.position.y -= 5
         gridHelper.position.y -= 5
-       // plane.set(new THREE.Vector3(0, currentFloor, 0), 0)
+        plane.set(new THREE.Vector3(0, 1, 0), -currentFloor + 1)
         controls.update();
     }
 })
