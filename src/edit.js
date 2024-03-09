@@ -11,7 +11,9 @@ THREE.Cache.enabled = true;
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
 var intersects = new THREE.Vector3();
-var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+var plane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -5);
+const helper = new THREE.PlaneHelper( plane, 20, 0xffff00 );
+scene.add( helper );
 
 var toggle = false;
 
@@ -82,6 +84,7 @@ var plus2Button = document.querySelector('.plus2Button');
 var minus2Button = document.querySelector('.minus2Button');
 var addfloorButton = document.querySelector('.addhigherlevelButton');
 var minusfloorButton = document.querySelector('.addlowerlevelButton');
+var currentFloor = 1;
 
 //walls = xValue, yValue, zValue, rotation, thickness, length, name, id
 //entrance = xValue, yValue, zValue, rotation, thickness, length, name, id
@@ -278,7 +281,7 @@ wallButton.addEventListener('click', function() {
   scene.add(wallClone);
 
   wallClone.scale.y = 2;
-  wallClone.position.y = 1;
+  wallClone.position.y = currentFloor;
   wallClone.name = 'wall' + zeroPad(currentWall, 3);
   wallClone.updateMatrix();
   objects.push(wallClone);
@@ -295,7 +298,7 @@ entranceButton.addEventListener('click', function() {
     scene.add(entranceClone);
     
     entranceClone.scale.y = 2;
-    entranceClone.position.y = 1;
+    entranceClone.position.y = currentFloor;
     entranceClone.name = 'entrance' + zeroPad(currentEntrance,3);
     entranceClone.updateMatrix();
     objects.push(entranceClone);
@@ -310,7 +313,7 @@ hallwayNodeButton.addEventListener('click', function() {
         const hallwayNodeClone = hallwayNode.clone();
         scene.add(hallwayNodeClone);
         
-        hallwayNodeClone.position.y = 1;
+        hallwayNodeClone.position.y = currentFloor;
         hallwayNodeClone.name = 'hallwayNode' + zeroPad(currentHallwayNode,3);
         hallwayNodeClone.updateMatrix();
         objects.push(hallwayNodeClone);
@@ -325,7 +328,7 @@ entranceNodeButton.addEventListener('click', function() {
             const entranceNodeClone = entranceNode.clone();
             scene.add(entranceNodeClone);
             
-            entranceNodeClone.position.y = 1;
+            entranceNodeClone.position.y = currentFloor;
             entranceNodeClone.name = 'entranceNode' + zeroPad(currentEntranceNode, 3);
             entranceNodeClone.updateMatrix();
             objects.push(entranceNodeClone);
@@ -340,7 +343,7 @@ stairsNodeButton.addEventListener('click', function() {
                 const stairsNodeClone = stairsNode.clone();
                 scene.add(stairsNodeClone);
                 
-                stairsNodeClone.position.y = 1;
+                stairsNodeClone.position.y = currentFloor;
                 stairsNodeClone.name = 'stairsNode' + zeroPad(currentStairsNode, 3);
                 stairsNodeClone.updateMatrix();
                 objects.push(stairsNodeClone);
@@ -355,7 +358,7 @@ roomNodeButton.addEventListener('click', function() {
     const roomNodeClone = roomNode.clone();
     scene.add(roomNodeClone);
     
-    roomNodeClone.position.y = 1;
+    roomNodeClone.position.y = currentFloor;
     roomNodeClone.name = 'roomNode0' + zeroPad(currentRoomNode, 3);
     roomNodeClone.updateMatrix();
     objects.push(roomNodeClone);
@@ -387,13 +390,12 @@ minus2Button.addEventListener('click', function() {
     }
 })
 
-var currentFloor = 1;
-
 addfloorButton.addEventListener('click', function() {
     currentFloor += 5
     controls.target.set(0, currentFloor, 0)
     camera.position.y += 5
     gridHelper.position.y += 5
+    //plane.set(new THREE.Vector3(0, currentFloor, 0), 0)
     controls.update();
 })
 
@@ -404,6 +406,7 @@ minusfloorButton.addEventListener('click', function() {
         controls.target.set(0, currentFloor, 0)
         camera.position.y -= 5
         gridHelper.position.y -= 5
+       // plane.set(new THREE.Vector3(0, currentFloor, 0), 0)
         controls.update();
     }
 })

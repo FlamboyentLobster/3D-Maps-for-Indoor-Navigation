@@ -269,7 +269,6 @@ rightButton.addEventListener('click', function() {
                 currentEntrance = entrances[o];
             }
         }
-    
     } else if (o >= limito) {
         o = 0
         currentEntrance = "";
