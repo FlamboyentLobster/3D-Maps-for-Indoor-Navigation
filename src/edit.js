@@ -242,8 +242,8 @@ function onMouseClick( event ) {
     
         if (toggle == false) {
             if (intersects.length > 0) {
-            currentObject = scene.getObjectByName(intersects[0].object.name)
-            toggle = true
+                currentObject = scene.getObjectByName(intersects[0].object.name)
+                toggle = true
             }
         } else {
             toggle = false
