@@ -115,6 +115,8 @@ let graph = {
     roomNode0009: { hallwayNode003: 1.5  },
 };
 
+
+
 let shortestDistanceNode = (distances, visited) => {
     // create a default value for shortest
       let shortest = null;
@@ -136,7 +138,6 @@ let shortestDistanceNode = (distances, visited) => {
   };
 
 let findShortestPath = (graph, startNode, endNode) => {
- 
     // track distances from the start node using a hash object
       let distances = {};
     distances[endNode] = "Infinity";
@@ -198,9 +199,169 @@ let findShortestPath = (graph, startNode, endNode) => {
      distance: distances[endNode],
      path: shortestPath,
     };
-    // return the shortest path & the end node's distance from the start node
+    // return the shortest path
       return shortestPath;
    };
+
+   class Graph {
+    constructor(vertices) {
+        this.V = vertices;
+        this.edges = [];
+    }
+
+    addEdge(src, dest, weight) {
+        this.edges.push({ src, dest, weight });
+    }
+
+    bellmanFord(startVertex) {
+        const start = performance.now();
+        let dist = new Array(this.V).fill(Infinity);
+        dist[startVertex] = 0;
+
+        // Relax all edges |V| - 1 times
+        for (let i = 0; i < this.V - 1; i++) {
+            for (let j = 0; j < this.edges.length; j++) {
+                let { src, dest, weight } = this.edges[j];
+                if (dist[src] !== Infinity && dist[src] + weight < dist[dest]) {
+                    dist[dest] = dist[src] + weight;
+                }
+            }
+        }
+
+        // Check for negative weight cycles
+        for (let i = 0; i < this.edges.length; i++) {
+            let { src, dest, weight } = this.edges[i];
+            if (dist[src] !== Infinity && dist[src] + weight < dist[dest]) {
+                console.log("Graph contains negative weight cycle");
+                return;
+            }
+        }
+        const end = performance.now();
+        console.log(`Execution time: ${end - start} ms`);
+        return dist;
+    }
+}
+
+function visualizeGraph(graph) {
+    console.log("Graph:");
+    console.log("Vertex -> Edges (Weight)");
+    for (let i = 0; i < graph.edges.length; i++) {
+        const { src, dest, weight } = graph.edges[i];
+        console.log(`${src} -> ${dest} (${weight})`);
+    }
+}
+
+// Bellman-Ford Graph
+const bellmanFordGraph = new Graph(26);
+bellmanFordGraph.addEdge(0, 1, 6);
+bellmanFordGraph.addEdge(0, 2, 7);
+bellmanFordGraph.addEdge(1, 2, 8);
+bellmanFordGraph.addEdge(1, 3, 5);
+bellmanFordGraph.addEdge(1, 4, -4);
+bellmanFordGraph.addEdge(2, 3, -3);
+bellmanFordGraph.addEdge(2, 4, 9);
+bellmanFordGraph.addEdge(3, 1, -2);
+bellmanFordGraph.addEdge(4, 3, 7);
+bellmanFordGraph.addEdge(5, 6, 5);
+bellmanFordGraph.addEdge(5, 7, 3);
+bellmanFordGraph.addEdge(6, 8, 4);
+bellmanFordGraph.addEdge(6, 9, 2);
+bellmanFordGraph.addEdge(7, 8, -1);
+bellmanFordGraph.addEdge(7, 10, 6);
+bellmanFordGraph.addEdge(8, 11, 1);
+bellmanFordGraph.addEdge(9, 10, -2);
+bellmanFordGraph.addEdge(9, 12, 4);
+bellmanFordGraph.addEdge(10, 11, 3);
+bellmanFordGraph.addEdge(10, 13, 2);
+bellmanFordGraph.addEdge(11, 13, 5);
+bellmanFordGraph.addEdge(12, 14, 2);
+bellmanFordGraph.addEdge(13, 14, 7);
+bellmanFordGraph.addEdge(14, 15, 3);
+bellmanFordGraph.addEdge(15, 16, 4);
+bellmanFordGraph.addEdge(16, 17, -2);
+bellmanFordGraph.addEdge(16, 18, 1);
+bellmanFordGraph.addEdge(17, 19, 5);
+bellmanFordGraph.addEdge(17, 20, 3);
+bellmanFordGraph.addEdge(18, 20, 6);
+bellmanFordGraph.addEdge(19, 21, 2);
+bellmanFordGraph.addEdge(19, 22, 4);
+bellmanFordGraph.addEdge(20, 22, 1);
+bellmanFordGraph.addEdge(21, 23, -3);
+bellmanFordGraph.addEdge(21, 24, 2);
+bellmanFordGraph.addEdge(22, 24, 3);
+bellmanFordGraph.addEdge(23, 25, 5);
+bellmanFordGraph.addEdge(24, 25, -1);
+
+visualizeGraph(bellmanFordGraph);
+
+const startVertex = 0;
+console.log("\nShortest distances from vertex", startVertex, "using Bellman-Ford algorithm:");
+console.log(bellmanFordGraph.bellmanFord(startVertex));
+
+ 
+
+
+
+  function floydWarshall(graph) {
+    const start = performance.now();
+    let dist = [];
+    for (let i = 0; i < graph.length; i++) {
+      dist[i] = [];
+      for (let j = 0; j < graph.length; j++) {
+        if (i === j) {
+          dist[i][j] = 0;
+        } else if (!isFinite(graph[i][j])) {
+          dist[i][j] = Infinity;
+        } else {
+          dist[i][j] = graph[i][j];
+        }
+      }
+    }
+    
+    for (let k = 0; k < graph.length; k++) {
+      for (let i = 0; i < graph.length; i++) {
+        for (let j = 0; j < graph.length; j++) {
+          if (dist[i][j] > dist[i][k] + dist[k][j]) {
+            dist[i][j] = dist[i][k] + dist[k][j];
+          }
+        }
+      }
+    }
+    const end = performance.now();
+console.log(`Execution time: ${end - start} ms`);
+    
+    return dist;
+  }
+
+  const graph26Nodes = [
+    [0, 5, 2, Infinity, 3, Infinity, Infinity, Infinity, 1, 4, 7, Infinity, Infinity, Infinity, Infinity, 9, 3, Infinity, 5, 6, Infinity, 1, 4, 2, 7, 8],
+    [Infinity, 0, 6, 8, Infinity, Infinity, 4, Infinity, 3, 2, 9, Infinity, 10, Infinity, Infinity, Infinity, Infinity, 2, Infinity, 3, Infinity, Infinity, 8, Infinity, 5],
+    [2, Infinity, 0, 1, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, Infinity, Infinity, 0, 2, Infinity, Infinity, 5, 1, Infinity, Infinity, Infinity, Infinity, 3, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [3, Infinity, Infinity, 2, 0, 4, Infinity, 6, 8, Infinity, Infinity, Infinity, Infinity, Infinity, 5, Infinity, 1, Infinity, 2, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, Infinity, Infinity, Infinity, 4, 0, 8, 1, Infinity, 9, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, 4, Infinity, Infinity, Infinity, 8, 0, 3, Infinity, Infinity, Infinity, 4, Infinity, Infinity, 1, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, Infinity, Infinity, 5, 6, 1, 3, 0, Infinity, Infinity, Infinity, Infinity, 7, 2, 4, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [1, 3, Infinity, 1, 8, Infinity, Infinity, Infinity, 0, 6, Infinity, 2, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [4, 2, Infinity, Infinity, Infinity, 9, Infinity, Infinity, 6, 0, 5, Infinity, Infinity, 3, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [7, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 5, 0, 6, 1, Infinity, 7, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, Infinity, 2, Infinity, Infinity, Infinity, 4, Infinity, 2, Infinity, 6, 0, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, 10, 5, Infinity, Infinity, Infinity, Infinity, 7, Infinity, Infinity, 1, Infinity, 0, 3, 5, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, Infinity, Infinity, 3, Infinity, Infinity, Infinity, 2, Infinity, 3, Infinity, Infinity, 3, 0, 6, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, Infinity, Infinity, Infinity, 5, Infinity, 1, 4, Infinity, Infinity, 7, Infinity, 5, 6, 0, 4, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [9, Infinity, Infinity, Infinity, Infinity, 2, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 4, 0, 6, 5, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [3, Infinity, Infinity, Infinity, 1, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 6, 0, 7, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, 2, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 5, 7, 0, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [5, Infinity, Infinity, Infinity, 2, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 0, 1, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [6, 3, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 1, 0, 7, Infinity, Infinity, Infinity, Infinity, Infinity],
+    [Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 7, 0, 2, Infinity, Infinity, Infinity, Infinity],
+    [1, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 2, 0, Infinity, Infinity, Infinity, Infinity],
+    [4, 8, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 0, 3, Infinity, Infinity],
+    [2, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 3, 0, Infinity, Infinity],
+    [7, 5, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, Infinity, 0, 1],
+];
+
+
 
 const gridHelper = new THREE.GridHelper(20, 20);
 scene.add(gridHelper);
@@ -359,6 +520,9 @@ left2Button.addEventListener('click', function() {
 
 // to do -----------------------------------------------------------------------------------------
 
+
+
+
 goButton.addEventListener('click', function() {
     if (currentEntrance == "") {
         window.alert("Entrance not selected")
@@ -402,3 +566,5 @@ function animate() {
 }
 
 animate()
+
+
