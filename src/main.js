@@ -303,7 +303,6 @@ console.log(bellmanFordGraph.bellmanFord(startVertex));
 
 
   function floydWarshall(graph) {
-    const start = performance.now();
     let dist = [];
     for (let i = 0; i < graph.length; i++) {
       dist[i] = [];
@@ -326,10 +325,7 @@ console.log(bellmanFordGraph.bellmanFord(startVertex));
           }
         }
       }
-    }
-    const end = performance.now();
-console.log(`Execution time: ${end - start} ms`);
-    
+    } 
     return dist;
   }
 
